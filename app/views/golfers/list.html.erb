@@ -1,0 +1,25 @@
+ <h2>Golfer Leaderboard</h2>
+ <table border="0">
+   <tr>
+     <td align="left"><b><%=link_to 'Name', golfer_list_path, :sort => 'last_name'%></b></td>
+     <td align="center"><b><%=link_to 'Score', golfer_list_path, :sort => 'score'%></b></td>
+     <td align="center"><b><%=link_to 'Thru', golfer_list_path, :sort => 'thru'%></b></td>
+   </tr>
+   <%for golfer in @golfers -%>
+   <tr>
+	   <td align="left"><%=link_to h(golfer.full_name), "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></td>
+     <td align="center" width="50">
+	  <%if golfer.score == 0%>
+	    E
+	  <%else%>
+		<%=h (golfer.score)%>
+	  <%end%>
+	 </td>
+     <td align="center" width="50"><%=h (golfer.thru)%></td>
+     <td align="center" width="125"><%= link_to 'Who has him', golfer_who_has_path(golfer.id), 
+        :onclick=>"window.open(this.href,'who', 'height=400, width=200');return false;" %>
+     </td>
+   </tr>
+   <%end%>
+
+ </table>

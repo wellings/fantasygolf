@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  golfer_id: 1
+  sort: 1
+  rank: 1
+
+two:
+  user_id: 1
+  golfer_id: 1
+  sort: 1
+  rank: 1

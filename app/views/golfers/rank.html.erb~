@@ -1,0 +1,23 @@
+<div class = 'depot-form'>
+
+<fieldset>
+	<legend>Update Golfer Rank</legend>
+
+<h1>Golfers</h1>
+<%= link_to 'New golfer', new_golfer_path %>
+
+<%= form_tag :action => 'update_rank' do %>
+  <%for @golfer in @golfers -%>
+  <p><label for="golfer_name"><%= @golfer.full_name%></label>
+<%= text_field "golfer[]", :rank , :size=> 3%></p>
+  <%end%>
+
+	<p><%= submit_tag 'Update' %></p>
+  
+<% end %>
+<br />
+
+<%= link_to 'New golfer', golfers_new_path %>
+ </fieldset>
+</div>
+

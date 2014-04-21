@@ -1,0 +1,222 @@
+class GolfersController < ApplicationController
+ 
+       
+def index
+    @golfers = Golfer.order('golfers.last_name asc').all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @golfers }
+    end
+  end
+
+  # GET /golfers/1
+  # GET /golfers/1.xml
+  def show
+    @golfer = Golfer.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @golfer }
+    end
+  end
+
+  # GET /golfers/new
+  # GET /golfers/new.xml
+  def new
+    @golfer = Golfer.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @golfer }
+    end
+  end
+
+  # GET /golfers/1/edit
+  def edit
+    @golfer = Golfer.find(params[:id])
+  end
+
+  # POST /golfers
+  # POST /golfers.xml
+  def create
+    @golfer = Golfer.new(golfer_params)
+
+    respond_to do |format|
+      if @golfer.save
+        flash[:notice] = 'Golfer was successfully created.'
+        format.html { redirect_to golfers_path }
+        format.xml  { render :xml => @golfer, :status => :created, :location => @golfer }
+      else
+        flash[:error] = 'Golfer was NOT successfully created.'
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @golfer.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /golfers/1
+  # PUT /golfers/1.xml
+  def update
+    @golfer = Golfer.find(params[:id])
+
+    respond_to do |format|
+      if @golfer.update_attributes(golfer_params)
+        flash[:notice] = 'Golfer was successfully updated.'
+        format.html { redirect_to golfers_path }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @golfer.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /golfers/1
+  # DELETE /golfers/1.xml
+  def destroy
+    @golfer = Golfer.find(params[:id])
+    @golfer.destroy
+
+    respond_to do |format|
+      format.html { redirect_to :controller => 'golfers' }
+      format.xml  { head :ok }
+    end
+  end
+  
+  def rank
+    @golfers = Golfer.order('golfers.last_name asc').all
+  end
+  
+  def update_rank
+    params[:golfer].each do |idx, golfer|
+      golfer_rank = Golfer.find(idx)
+      golfer_rank.update_attributes(golfer)
+    end
+    flash[:notice] = 'Golfer rank was successfully updated.'
+    redirect_to golfer_rank_path
+  end
+
+  def edit_score
+    @golfers = Golfer.find_by_sql('SELECT  DISTINCT ( golfer_id ), golfers.id, first_name, last_name, score, thru, web_id 
+  FROM selections, golfers WHERE golfers.id = selections.golfer_id
+  and golfers.score<>99 ORDER BY last_name ASC')
+  end
+
+  def update_score
+    params[:golfer].each do |idx, golfer|
+      golfer_score = Golfer.find(idx)
+      golfer_score.update_attributes(golfer)
+    end
+    flash[:notice] = 'Golfer scores was successfully updated.'
+
+    @players = User.find(:all)
+    for player in @players
+      sort = 0
+      @player_selection = Selection.find(:all,
+                                         :conditions => ['user_id = ?', player.id],
+                                         :include => 'golfer',
+                                         :order => 'golfers.score asc')
+
+      for selection in @player_selection
+        sort += 1;
+        score_sort = Selection.find(selection.id)
+        score_sort.sort = sort
+        score_sort.save
+
+        player = User.find(selection.user_id)
+        player.score = Selection.sum('golfers.score', :include => 'golfer', :conditions => ['user_id = ? and selections.sort < 6', selection.user_id])
+        player.save
+      end 
+    end
+    redirect_to '/'
+  end
+
+ def list
+   
+   if params[:sort].blank? || params[:sort] == 'last_name'
+    sort = 'last_name'
+   else
+    sort = 'score'
+   end
+
+   @golfers = Golfer.find_by_sql("SELECT  DISTINCT ( golfer_id ), golfers.id, first_name, last_name, score, web_id, thru 
+  FROM selections, golfers WHERE golfers.id = selections.golfer_id and golfers.score<>99 ORDER BY #{sort} ASC")
+  
+ end
+ 
+ def who_has
+   @users = Selection.where(:golfer_id => params[:id]).all
+   render layout: false
+ end
+
+ def golfer_scores
+   @golfers = Golfer.find_by_sql('SELECT  DISTINCT ( golfer_id ), golfers.id, first_name, last_name, score, thru, web_id
+       FROM selections, golfers WHERE golfers.id = selections.golfer_id
+       and golfers.score<>99 ORDER BY last_name ASC')
+
+  for golfer in @golfers
+
+    retryable(:tries => 20, :on => OpenURI::HTTPError) do
+      @doc = Hpricot(open("http://sports.yahoo.com/golf/pga/players/#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}/scorecard/2013/33"))
+      logger.info "http://sports.yahoo.com/golf/pga/players/#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}/scorecard/2013/33"
+    end
+
+    score = @doc.search("//div[@class='playerStats']/ul/li[5]/span").inner_html
+    thru = @doc.search("//div[@class='playerStats']/ul/li[4]/span").inner_html
+
+    golfer_score = Golfer.find(golfer.id)
+    golfer_score.update_attribute('score', score)
+    golfer_score.update_attribute('thru', thru)
+
+  end
+    
+    @players = User.find(:all)
+
+    for player in @players
+
+      sort = 0
+      @player_selection = Selection.find(:all,
+                                         :conditions => ['user_id = ?', player.id],
+                                         :include => 'golfer',
+                                         :order => 'golfers.score asc')
+
+      for selection in @player_selection
+
+        sort += 1;
+        score_sort = Selection.find(selection.id)
+        score_sort.sort = sort
+        score_sort.save
+
+        player = User.find(selection.user_id)
+        player.score = Selection.sum('golfers.score', :include => 'golfer', :conditions => ['user_id = ? and selections.sort < 6', selection.user_id])
+        player.save
+        
+      end 
+    end
+    redirect_to '/'
+
+end
+
+private
+
+private
+  def golfer_params    
+    params.require(:golfer).permit(:first_name, :last_name, :rank, :web_id)
+  end
+
+def retryable(options = {}, &block)
+  opts = { :tries => 10, :on => Exception }.merge(options)
+
+  retry_exception, retries = opts[:on], opts[:tries]
+
+  begin
+    return yield
+  rescue retry_exception
+    retry if (retries -= 1) > 0
+  end
+
+  yield
+ end
+
+end

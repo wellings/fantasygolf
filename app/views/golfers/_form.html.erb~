@@ -1,0 +1,17 @@
+<%= error_messages_for 'golfer' %>
+
+<!--[form:golfer]-->
+<p><label for="golfer_first_name">First name</label><br/>
+<%= text_field 'golfer', 'first_name'  %></p>
+
+<p><label for="golfer_last_name">Last name</label><br/>
+<%= text_field 'golfer', 'last_name'  %></p>
+
+<p><label for="golfer_rank">Rank</label><br/>
+<%= text_field 'golfer', 'rank'  %></p>
+
+<p><label for="golfer_web_id">Web ID</label><br/>
+<%= text_field 'golfer', 'web_id'  %></p>
+
+<!--[eoform:golfer]-->
+

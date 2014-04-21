@@ -1,0 +1,11 @@
+<h3><%=current_user.first_name%> <%=current_user.last_name%></h3>
+<h2>Golfer <%=session[:select_count]%> Selection</h2>
+  <%if session[:select_count].to_i > 6%>
+	<b>The 7-10 Selections will be from this same pool of names</b>
+  <%end%>
+	<% form_tag :action => 'create' do %>
+		<%= render :partial => 'form' %>
+		<%= submit_tag "Next" %>
+	<% end %>
+
+

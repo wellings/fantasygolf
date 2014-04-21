@@ -1,0 +1,23 @@
+<div class = 'depot-form'>
+
+<fieldset>
+	<legend>Edit Golfer</legend>
+
+<%= form_for :golfer, url: golfer_path(@golfer), :method: :put do |f| %>
+	<p><%= f.label :first_name %><br/>
+<%= f.text_field :first_name  %></p>
+
+<p><label for="golfer_last_name">Last name</label><br/>
+<%= f.text_field :last_name  %></p>
+
+<p><label for="golfer_rank">Rank</label><br/>
+<%= f.text_field :rank  %></p>
+
+<p><label for="golfer_web_id">Web ID</label><br/>
+<%= f.text_field :web_id  %></p>
+
+  <%= f.submit "Save" %>
+<% end %>
+
+ </fieldset>
+</div>

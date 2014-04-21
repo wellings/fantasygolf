@@ -1,0 +1,25 @@
+<div class = 'depot-form'>
+
+<fieldset>
+	<legend>New Golfer</legend>
+
+
+<%= form_for :golfer, url: golfers_path do |f| %>
+  
+  <div><%= f.label :first_name %><br />
+  <%= f.text_field :first_name, autofocus: true %></div>
+
+  <div><%= f.label :last_name %><br />
+  <%= f.text_field :last_name %></div>
+
+  <div><%= f.label :rank %><br />
+  <%= f.text_field :rank %></div>
+
+  <div><%= f.label :web_id %><br />
+  <%= f.text_field :web_id %></div>
+
+  <div><%= f.submit "Submit" %></div>
+ </fieldset>
+</div>
+
+<% end %>

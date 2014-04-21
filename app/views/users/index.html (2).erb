@@ -1,0 +1,18 @@
+<table border = "1" width="750">
+<tr>
+ <td width = "350" valign="top">
+ <table border="0" >
+   <tr>
+     <td align="center" width="25"><b>Rank</b></td>
+     <td align="left" width="50"><b>Name</b></td>
+     <td align="center" width="25"><b>Score</b></td>
+     <td align="center" width="100"><b>Tiebreak</b></td>
+   </tr>
+     <%@rank = 0%>
+	 <%@line = false%>
+     <%= render :partial => 'user', :collection => @users %>
+ </table>
+</td>
+<td valign="top"><b>Chat Room (beta)</b><br><%= render :partial => 'chat' %></td>
+</tr>
+</table>

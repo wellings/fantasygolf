@@ -1,0 +1,6 @@
+<%= error_messages_for 'golfer' %>
+<!--[form:golfer]-->
+<p><label for="golfer_name"><%= @golfer.full_name%></label>
+<%= text_field "golfer[]", :rank , :size=> 3%></p>
+<!--[eoform:golfer]-->
+
