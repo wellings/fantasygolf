@@ -1,2 +1,12 @@
 <h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<table border="0" >
+   <tr>
+     <td align="center" width="25"><b>Rank</b></td>
+     <td align="left" width="50"><b>Name</b></td>
+     <td align="center" width="25"><b>Score</b></td>
+     <td align="center" width="100"><b>Tiebreak</b></td>
+   </tr>
+     <%@rank = 0%>
+	 <%@line = false%>
+     <%= render :partial => 'user', :collection => @users %>
+ </table>
