@@ -1,14 +1,48 @@
-<h1>Users#index</h1>
-<table border="0" >
-   <tr>
-     <td align="center" width="25"><b>Rank</b></td>
-     <td align="left" width="50"><b>Name</b></td>
-     <td align="center" width="25"><b>Score</b></td>
-     <td align="center" width="100"><b>Tiebreak</b></td>
-   </tr>
-     <%@rank = 0%>
-	 <%@line = false%>
-     <%= render :partial => 'user', :collection => @users %>
- </table>
- <%= link_to "Sign up now!", '#', class: "btn btn-large btn-primary" %>
+<div class= "container">
+	<div class="row">
+		<div class="text-center col-md-12">
+			<h1><%=ApplicationHelper::TOURNAMENT_NAME%></h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="text-center col-sm-5"><small>Last Update: 4/12 11:30 am<sql:getTimestamp colName="LastUpdate" format="M/d h:mm a" /></small></div>
+		<div class="col-sm-4"></div>
+	</div>
+	<div class = "row">
+		<div class="myGolferBG col-sm-3">
+		<% if user_signed_in? %>  
+	   		<div class="panel panel-default">
+	    			<div class="panel-heading">
+		    			<h3 class="panel-title"><%=current_user.full_name%></h3>
+	    			</div>
+  	    			<div class="panel-body">
+		    			<%=render :partial => '/selections/my_golfers' %>
+	    			</div>
+	   		</div>
+	 	<%end%> 
+ 		</div>
+	   	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				<div class= "text-left col-sm-12"><h4>Overall Leaderboard</h4></div>
+			</div>
+			<div class= "row">    
+				<div class= "text-center col-sm-3"><h5>Rank</h5></div>
+				<div class= "text-left col-sm-3"><h5>Name</h5></div>
+				<div class= "text-center col-sm-3"><h5>Score</h5></div>
+				<div class= "text-center col-sm-3"><h5>Tiebreak</h5></div>
+			</div>
+			<div class= "row">    
+				<%@rank = 0%>
+				<%@line = false%>
+				<%= render :partial => 'user', :collection => @users %>
+			</div>
+	
+    		</div>
+    		<div class= "col-sm-4">
+	    		<div class= "container">
+		    
+	   		</div>
+   		</div>
+    </div>
 </div>

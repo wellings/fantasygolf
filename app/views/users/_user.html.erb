@@ -1,20 +1,20 @@
- <%@rank += 1%>
-   	<%score = user.score%>
-    <%if score > 50 && @line == false%>
-	  <tr><td colspan="4"><hr></td></tr>
-	  <%@line = true%>
-	<%end%>
+<%@rank += 1%>
+<%score = user.score%>
 
-<tr class="<%= cycle('odd', 'even') %>">
+<%if score > 50 && @line == false%>
+<hr>
+<%@line = true%>
+<%end%>
 
-   <td align="center" width="75"><%=@rank%></td>
-   <td align="left" width="175"><%=link_to h(user.full_name), users_golfers_path(user.id) %></td>
-   <td align="center" width="75">
-	  <%if score > 50%>
-	    <div align="center"><font color="#FF0000">MC</font></div>
-	  <%else%>
+<div class= "text-center col-sm-3"><%=@rank%></div>
+<div class= "text-left col-sm-3"><%=link_to h(user.full_name), users_golfers_path(user.id) %></div>
+
+<div class= "text-center col-sm-3">
+	<%if score > 50%>
+		<font color="#FF0000">MC</font>
+	<%else%>
 		<%=h score%>
-	  <%end%>
-   </td>
-   <td align="center"><%=user.tiebreaker%></td>
+	<%end%>
+</div>
+<div class= "text-center col-sm-3"><%=user.tiebreaker%></div>
 
