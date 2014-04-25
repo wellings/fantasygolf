@@ -1,6 +1,5 @@
-<div class= "container">
 	<div class="row">
-		<div class="text-center col-md-12">
+		<div class="text-center col-sm-12">
 			<h1><%=ApplicationHelper::TOURNAMENT_NAME%></h1>
 		</div>
 	</div>
@@ -10,39 +9,44 @@
 		<div class="col-sm-4"></div>
 	</div>
 	<div class = "row">
-	<div class="myGolferBG col-sm-3">
-	<% if user_signed_in? %>  
-	   <div class="panel panel-default">
-	    <div class="panel-heading">
-		    <h3 class="panel-title"><%=current_user.full_name%></h3>
-	    </div>
-  	    <div class="panel-body">
-		    <%=render :partial => '/selections/my_golfers' %>
-	    </div>
-	   </div>
-	 <%end%> 
- 	</div>
+		<div class="myGolferBG col-sm-3">
+		<% if user_signed_in? %>  
+	   		<div class="panel panel-default">
+	    			<div class="panel-heading">
+					<h3 class="panel-title"><%=current_user.full_name%></h3>
+					<%= link_to 'Edit profile', edit_user_registration_path %> |
+		  			<%= link_to "Logout", destroy_user_session_path, method: :delete  %>
+	    			</div>
+  	    			<div class="panel-body">
+					<%= render :partial => '/selections/my_golfers' %>
+	    			</div>
+	   		</div>
+	 	<%end%> 
+ 		</div>
+	   	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				<div class= "text-left col-sm-12"><h4>Overall Leaderboard</h4></div>
+			</div>
+			<div class= "row">    
+				<%@rank = 0%>
+				<%@line = false%>
+				<div class= "container">
+				   <table>
+					<tr>
+						<td class="main text-center"><h5><b>Rank</b></h5></td>
+						<td class="main text-left"><h5><b>Name</b></h5></td>
+						<td class="main text-center"><h5><b>Score</b></h5></td>
+						<td class="main text-center"><h5><b>Tiebreaker</b></h5></td>
+					</tr>
+					
+						<%= render @users %>
+					
+				   </table>
+				</div>
+			</div>
+    		</div>
+		<div class= "col-sm-4">
+	    		
+   		</div>
+     </div>
 
-   	<div class= "mainBG col-sm-5">
-	<div class= "row">
-		<div class= "text-left col-sm-12"><h4>Overall Leaderboard</h4></div>
-	</div>
-	<div class= "row">    
-		<div class= "text-center col-sm-3"><h5>Rank</h5></div>
-		<div class= "text-left col-sm-3"><h5>Name</h5></div>
-		<div class= "text-center col-sm-3"><h5>Score</h5></div>
-		<div class= "text-center col-sm-3"><h5>Tiebreak</h5></div>
-	</div>
-	<div class= "row">    
-		<%@rank = 0%>
-		<%@line = false%>
-		<%= render :partial => 'user', :collection => @users %>
-	</div>
-	
-    </div>
-    <div class= "col-sm-4">
-	    <div class= "container">
-		    
-	   </div>
-   </div>
-</div>

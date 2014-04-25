@@ -1,3 +1,4 @@
+
 <%@rank += 1%>
 <%score = user.score%>
 
@@ -5,16 +6,15 @@
 <hr>
 <%@line = true%>
 <%end%>
-
-<div class= "col-sm-3"><%=@rank%></div>
-<div class= "col-sm-3"><%=link_to h(user.full_name), users_golfers_path(user.id) %></div>
-
-<div class= "col-sm-3">
-	<%if score > 50%>
-		<font color="#FF0000">MC</font>
-	<%else%>
-		<%=h score%>
-	<%end%>
-</div>
-<div class= "col-sm-3"><%=user.tiebreaker%></div>
-
+		<tr class="main">
+	  		<td class="main text-center"><%=@rank%></td>
+			<td><%=link_to h(user.full_name), users_golfers_path(user.id) %></td>
+			<td class="main text-center">	
+				<%if score > 50%>
+					<font color="#FF0000">MC</font>
+				<%else%>
+					<%=h score%>
+				<%end%>
+			</td>
+			<td class="main text-center"><%=user.tiebreaker%></td>	
+		</tr>

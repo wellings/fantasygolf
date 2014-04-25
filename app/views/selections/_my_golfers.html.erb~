@@ -3,19 +3,26 @@
 	<li>Group: <strong>No Group</strong></li>
 	<li>Group Rank: <strong><%if nil==nil%>N/A<%else%><%=1.ordinalize%><%end%></strong></li>
 	<li>Status: <strong>Paid</strong></li>
+	<li>Tiebreaker: <strong><%=current_user.tiebreaker%></strong></li>
+</ul>
+<ul>
+	<li><%=link_to "Golfer Leaderboard", golfer_list_path %></li>
 </ul>
 
-	<table width="100%">
+
+
+
+	<table>
 		<tr>
-			<td><h5><b>My Golfers</b></h5></td>
-			<td class="text-center"><h5><b>Score</b></h5></td>
-			<td class="text-center"><h5><b>Thru</b></h5></td>
+			<td class="myGolfer"><h5><b>My Golfers</b></h5></td>
+			<td class="myGolfer text-center"><h5><b>Score</b></h5></td>
+			<td class="myGolfer text-center"><h5><b>Thru</b></h5></td>
 		</tr>
 	<%for my_golfer in Selection.where(:user_id => current_user) -%> 
-	  	<tr>
-			<td><small><%=my_golfer.golfer.full_name%></small></td>
-			<td class="text-center"><small><%=my_golfer.golfer.score%></small></td>
-			<td class="text-center"><small><%=my_golfer.golfer.thru%></small></td>
+	  	<tr class="myGolfer">
+			<td class="myGolfer"><small><%=my_golfer.golfer.full_name%></small></td>
+			<td class="myGolfer text-center"><small><%=my_golfer.golfer.score%></small></td>
+			<td class="myGolfer text-center"><small><%=my_golfer.golfer.thru%></small></td>
 		</tr>	
 	<%end%>
 	</table>

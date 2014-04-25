@@ -1,14 +1,26 @@
 @import "bootstrap";
 
+/* comment text */
+
 html {
   overflow-y: scroll;
 }
+/*  background: url(background.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+*/
+
 body {
   padding-top: 60px;
   background: url('background.jpg');
-  background-size: 1440px 800px;
-
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
+
 section {
   overflow: auto;
 }
@@ -17,12 +29,32 @@ textarea {
   resize: vertical;
 }
 
-tr {
+td.myGolfer{
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+
+}
+
+td.main{
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+
+}
+
+tr.myGolfer {
 	line-height:  15px;
 	min-height:  15px;
 	height:  15px;
 }
-
+tr.main {
+	line-height:  20px;
+	min-height:  20px;
+	height:  20px;
+}
 
 .center {
   text-align: center;
