@@ -1,25 +1,38 @@
- <h2>Golfer Leaderboard</h2>
- <table border="0">
-   <tr>
-     <td align="left"><b><%=link_to 'Name', golfer_list_path, :sort => 'last_name'%></b></td>
-     <td align="center"><b><%=link_to 'Score', golfer_list_path, :sort => 'score'%></b></td>
-     <td align="center"><b><%=link_to 'Thru', golfer_list_path, :sort => 'thru'%></b></td>
-   </tr>
-   <%for golfer in @golfers -%>
-   <tr>
-	   <td align="left"><%=link_to h(golfer.full_name), "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></td>
-     <td align="center" width="50">
-	  <%if golfer.score == 0%>
-	    E
-	  <%else%>
-		<%=h (golfer.score)%>
-	  <%end%>
-	 </td>
-     <td align="center" width="50"><%=h (golfer.thru)%></td>
-     <td align="center" width="125"><%= link_to 'Who has him', golfer_who_has_path(golfer.id), 
-        :onclick=>"window.open(this.href,'who', 'height=400, width=200');return false;" %>
-     </td>
-   </tr>
-   <%end%>
 
- </table>
+	   	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				<div class= "text-left col-sm-12"><h4>Golfer Leaderboard</h4></div>
+			</div>
+			<div class= "row">    
+				<div class= "container">
+				   <table>
+ 					   <tr>
+					     <td class="main text-left"><h5><b><%=link_to 'Name', golfer_list_path, :sort => 'last_name'%></b></h5></td>
+					     <td class="main text-center"><h5><b><%=link_to 'Score', golfer_list_path, :sort => 'score'%></b></h5></td>
+					     <td class="main text-center"><h5><b><%=link_to 'Thru', golfer_list_path, :sort => 'thru'%></b></h5></td>
+					</tr>
+					
+					<%for golfer in @golfers -%>
+   					<tr>
+	   					<td class="main text-left"><%=link_to h(golfer.full_name), "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></td>
+     						<td class="main text-center">
+	  						<%if golfer.score == 0%>
+	    						   E
+	  						<%else%>
+							   <%=h (golfer.score)%>
+	  						<%end%>
+						</td>
+     						<td class="main text-center"><%=h (golfer.thru)%></td>
+						<td class="main text-center">
+							<%= link_to 'Who has him', golfer_who_has_path(golfer.id) %>
+						</td>
+						<td>
+						</td>
+   					</tr>
+   					<%end%>
+					
+				   </table>
+				</div>
+			</div>
+    		</div>
+

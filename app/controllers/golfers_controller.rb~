@@ -147,6 +147,7 @@ def index
  
  def who_has
    @users = Selection.where(:golfer_id => params[:id]).all
+   @golfer = Golfer.where(params[:id]).first
  end
 
  def golfer_scores

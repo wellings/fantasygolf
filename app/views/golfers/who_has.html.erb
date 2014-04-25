@@ -1,4 +1,17 @@
-
-<%for selection in @users -%>
-     <%=h(selection.user.full_name)%><br>
-  <%end%>
+	   	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				<div class= "text-left col-sm-12"><h4>Who Has <%=@golfer.full_name%></h4></div>
+			</div>
+			<div class= "row">    
+				<div class= "container">
+				   <table>
+					<%for selection in @users -%>
+   					<tr>
+	   					<td class="main text-left"><%=link_to h(selection.user.full_name), users_golfers_path %></td>
+   					</tr>
+   					<%end%>
+					
+				   </table>
+				</div>
+			</div>
+    		</div>

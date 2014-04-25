@@ -43,8 +43,40 @@
      <% end %>
   </div>
 
-	<div class="container">
-		<%= yield %>
+  <div class="container">
+	<div class="row">
+		<div class="text-center col-sm-12">
+			<h1><%=ApplicationHelper::TOURNAMENT_NAME%></h1>
+		</div>
 	</div>
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="text-center col-sm-5"><small>Last Update: 4/12 11:30 am<sql:getTimestamp colName="LastUpdate" format="M/d h:mm a" /></small></div>
+		<div class="col-sm-4"></div>
+	</div>
+	<div class = "row">
+		<div class="myGolferBG col-sm-3">
+		<% if user_signed_in? %>  
+	   		<div class="panel panel-default">
+	    			<div class="panel-heading">
+					<h3 class="panel-title"><%=current_user.full_name%></h3>
+					<%= link_to 'Edit profile', edit_user_registration_path %> |
+		  			<%= link_to "Logout", destroy_user_session_path, method: :delete  %>
+	    			</div>
+  	    			<div class="panel-body">
+					<%= render :partial => '/selections/my_golfers' %>
+	    			</div>
+	   		</div>
+	 	<%end%> 
+ 		</div>
+
+	  <%= yield %>
+	<div class= "col-sm-4">
+  		<div class= "container">
+		  
+   		</div>
+	</div>
+     </div>
+  </div>
 </body>
 </html>

@@ -1,10 +1,12 @@
+$(document).ready(function() {
+    $('#user').hover(function() {
+        $('#popup').show();
+    }, function() {
+        $('#popup').hide();
+    });
+});
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
-$('a[data-popup]').on('click', function(e) {
-  window.open( $(this).attr('href'), "Popup", "height=600, width=200" );
-  e.preventDefault();
-});
-
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
 // or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.

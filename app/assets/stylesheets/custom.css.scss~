@@ -14,13 +14,12 @@ html {
 
 body {
   padding-top: 60px;
-/*  background: url('background.jpg');
+  background: url('background.jpg');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-*/
-  }
+}
 
 section {
   overflow: auto;
@@ -103,4 +102,16 @@ h1 {
   padding-top: 9px;
   font-weight: bold;
   line-height: 1;
+}
+
+#popup {
+    height: 50px;
+    width: 200px;
+    text-align: center;
+    vertical-align:middle;
+    background-color: cornflowerblue;
+    color: white;
+    display: none;
+    padding-top: 8px;
+    position: absolute;
 }
