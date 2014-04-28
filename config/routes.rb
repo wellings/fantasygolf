@@ -16,7 +16,7 @@ Rails.application.routes.draw do
    get 'golfers/list', to: 'golfers#list', as: :golfer_list
    get 'golfers/who_has/:id', to: 'golfers#who_has', as: :golfer_who_has
    resources :golfers
-   get 'selections/start_over'
+   get 'selections/golfers', to: 'selections#golfers', as: :selection_golfers
    resources :selections
  
   # Example of regular route:

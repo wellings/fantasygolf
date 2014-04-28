@@ -47,7 +47,7 @@ class SelectionsController < ApplicationController
     @player_selection = Selection.find(params[:player_selection][:id])
     if @player_selection.update_attributes(params[:player_selection])
       flash[:notice] = 'Golfer Select was successfully updated.'
-      redirect_to 'http://www.sectionxsports.com/golfpool'
+      redirect_to '/'
     else
       render :action => 'edit'
     end

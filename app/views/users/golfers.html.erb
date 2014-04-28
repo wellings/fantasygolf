@@ -1,47 +1,57 @@
- <h2><%=@player.full_name%></h2>
- <h2>Score: <%=@player.score%></h2>
- <p>Tiebreaker: <%=@player.tiebreaker%></p>
- <hr>
- <h3>Golfers</h3>
- <table>
-   <tr>
-     <td align="center"><b>Rank</b></td>
-     <td align="left"><b>Name</b></td>
-     <td align="center"><b>Score</b></td>
-	 <td align="center"><b>Thru</b></td>
-   </tr>
- <%rank = 0%>
- <%line = false%>
+
+	   	<div class= "mainBG col-sm-5">
+			<div class= "row">
+			   <ul class="list-unstyled">
+				<li><div class= "text-left"><h4><%=@player.full_name%> (<%=@player.score%>)</h4></div></li>
+				<li class="main">Tiebreaker: <%=@player.tiebreaker%></li>
+				<li class="main">Overall Rank: </li>
+			  	<li class="main">Group Rank: </li>
+			  </ul>
+		  	 </div>
+			<div class= "row">    
+				   <table>
+ 					   <tr>
+					     <td class="main text-center"><h5><b>Rank</b></h5></td>
+					     <td class="main text-left"><h5><b>Name</b></h5></td>
+					     <td class="main text-center"><h5><b>Score</b></h5></td>
+					     <td class="main text-center"><h5><b>Thru</b></h5></td>
+					</tr>
+					 <%rank = 0%>
+					 <%line = false%>
+					 <%for selected in @golfers%>
+						<%rank += 1%>
+					   	<%score = selected.golfer.score%>
+						<%if score > 90 && line == false%>
+							  <tr><td colspan="5"><hr></td></tr>
+							  <%line = true%>
+						<%end%>
+					<tr>
+						<td class="main text-center"><%=selected.sort%></td>
+	   					<td class="main text-left"><%=link_to h(selected.golfer.full_name), "#{ApplicationHelper::WEB_URL}#{selected.golfer.first_name}+#{selected.golfer.last_name}/#{selected.golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></td>
+     						<td class="main text-center">
+	  						<%if selected.golfer.score == 0%>
+	    						   E
+	  						<%else%>
+							   <%=h (selected.golfer.score)%>
+	  						<%end%>
+						</td>
+     						<td class="main text-center"><%=h (selected.golfer.thru)%></td>
+						<td class="main text-center">
+							<%if line == false%>
+								<%= link_to 'Who else', golfer_who_has_path(selected.golfer.id) %>
+							<%end%>
+						</td>
+						<td>
+						</td>
+   					</tr>
+					 <%if rank == 5%>
+						  <tr><td colspan="4">&nbsp;</td></tr> 
+					 <%end%>
  
-<%for selected in @golfers%>
-<%rank += 1%>
-   	<%score = selected.golfer.score%>
-    <%if score > 90 && line == false%>
-	  <tr><td colspan="4"><hr></td></tr>
-	  <%line = true%>
-	<%end%>
-
-<tr class="<%= cycle('odd', 'even') %>">
-
-	<td align="center" width="75"><%=selected.sort%></td>
-	<td align="left" width="175"><%=link_to h(selected.golfer.full_name), "#{ApplicationHelper::WEB_URL}#{selected.golfer.first_name}+#{selected.golfer.last_name}/#{selected.golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></td>
-   <td align="center" width="75">
-   	<%if score == 0%>
-	E
-	<%else%>
-	  <%if score > 90%>
-	    <div align="center"><font color="#FF0000">MC</font></div>
-	  <%else%>
-		<%=h score%>
-	  <%end%>
-	<%end%>
-	</td>
-   <td align="center" width="75"><%=h selected.golfer.thru%></td>	
- </tr>
- <%if rank == 5%>
-  <tr><td colspan="4">&nbsp;</td></tr> 
- <%end%>
- <%end%>
- </table>
+   					<%end%>
+					
+				   </table>
+			</div>
+    		</div>
 
 

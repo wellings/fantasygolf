@@ -5,8 +5,11 @@
 	<li>Status: <strong>Paid</strong></li>
 	<li>Tiebreaker: <strong><%=current_user.tiebreaker%></strong></li>
 </ul>
-<ul>
+<ul class="list-unstyled">
 	<li><%=link_to "Golfer Leaderboard", golfer_list_path %></li>
+</ul>
+<ul class="list-unstyled">
+	<li><%=link_to "Choose My Golfers", selection_start_path %></li>
 </ul>
 
 

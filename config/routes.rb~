@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'users/index', to: '2014 USOPEN'
+  get 'users/index'
   get 'users/golfers/:id', to: 'users#golfers', as: :users_golfers
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
    get 'golfers/list', to: 'golfers#list', as: :golfer_list
    get 'golfers/who_has/:id', to: 'golfers#who_has', as: :golfer_who_has
    resources :golfers
-   get 'selections/start_over'
+   get 'selections/start_over', to: 'selections#start', as: selection_start
    resources :selections
  
   # Example of regular route:

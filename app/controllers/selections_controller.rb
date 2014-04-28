@@ -8,7 +8,7 @@ class SelectionsController < ApplicationController
     golfers_available
   end
 
-  def start_over
+  def golfers
     selections = Selection.where(user_id: current_user)
     for select in selections
       Selection.find(select.id).destroy

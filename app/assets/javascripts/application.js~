@@ -1,10 +1,3 @@
-$(document).ready(function() {
-    $('#user').hover(function() {
-        $('#popup').show();
-    }, function() {
-        $('#popup').hide();
-    });
-});
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -17,6 +10,8 @@ $(document).ready(function() {
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require bootstrap
+//= require bootstrap/dropdown
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
