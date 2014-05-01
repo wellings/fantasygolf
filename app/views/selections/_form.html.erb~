@@ -1,40 +1,39 @@
-<div class='depot-form'>
-
-<%= error_messages_for :selection %>
-
-<h2></h2>
-<fieldset>
-	<legend>Please select ONE golfer</legend>
-
 <%index=0%>	
-<table>
-	<tr>
-	  <td>
 <%for golfer in @golfers -%>
-  	<%not_selected = true%>
-    <%for selection in @my_golfers%>
-  		<%if golfer.id == selection.golfer_id%>
+	<%not_selected = true%>
+	    <%for selection in @my_golfers%>
+		<%if golfer.id == selection.golfer_id%>
 			<%not_selected = false%>
  		<%end%>
-	<%end%>
-  <%if not_selected%>	
-  <%if session[:select_count].to_i < 7%>
-  <%= radio_button :selection, :golfer_id, golfer.id%><%=link_to golfer.first_name + ' ' + golfer.last_name, "http://sports.yahoo.com/golf/pga/players/#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}/scorecard/2010/29", :popup => true %>
-  	<br/>
-  <%else%>
-  <%index=index+1%>
-    <%if index % 31 == 0%>
-  	  </td><td>
-    <%end%>
-  <%= radio_button :selection, :golfer_id, golfer.id%><%=link_to golfer.first_name + ' ' + golfer.last_name, "http://sports.yahoo.com/golf/pga/players/#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}/scorecard/2010/29", :popup => true %><br/>
-  <%end%>
+	    <%end%>
+  	<%if not_selected%>	
+	 <%if session[:select_count].to_i < 7%>
+		<div class= "row">
+			<div class= "col-sm-12">
+				<%= radio_button :selection, :golfer_id, golfer.id%><%=link_to h(golfer.full_name), "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %><br/>
+				<%=hidden_field :selection, :user_id, :value => current_user.id %>
+				<%=hidden_field :selection, :rank, :value => session[:select_count] %>
+    
+			 </div>		
+		</div>
+	<%else%>
+		<%index=index+1%>
+		<% if index % 3 == 1 %>
+			<div class= "row">
+				<div class= "col-sm-4 text-span hideOverflow">
+					<%= radio_button :selection, :golfer_id, golfer.id%><small><%=link_to h(golfer.full_name), "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :title => h(golfer.full_name), :target => '_blank' %></small>
+						<%=hidden_field :selection, :user_id, :value => current_user.id %>
+						<%=hidden_field :selection, :rank, :value => session[:select_count] %>
+				</div>
+		<%else%>
+			<div class= "col-sm-4 text-span hideOverflow">
+				<%= radio_button :selection, :golfer_id, golfer.id%><small><%=link_to h(golfer.full_name), "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></small>
+					<%=hidden_field :selection, :user_id, :value => current_user.id %>
+					<%=hidden_field :selection, :rank, :value => session[:select_count] %>
+			</div>
+		<%end%>
+		<% if index % 3 == 0 or index == @golfers.count%></div><% end %>
+      <%end%>	
+ <%end%>
 <%end%>
-<%=hidden_field :selection, :user_id, :value => current_user.id %>
-<%=hidden_field :selection, :rank, :value => session[:select_count] %>
-<%end%>
-	</td>
-  </tr>
-</table>
-</fieldset>
-
-</div>
+<div class= "row"><div class="col-sm-12"><br /></div></div>

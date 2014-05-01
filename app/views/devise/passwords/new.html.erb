@@ -1,12 +1,46 @@
-<h2>Forgot your password?</h2>
+ 	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				<div class= "text-left col-sm-12"><h4>Forgot your password?</h4></div>
+			</div>
+			
+			<div class= "row">
+ 			   <div class= "text-left col-sm-12">
+				   <% if resource.errors.any? %>
+					   <div class= "alert alert-danger">
+				   		<%= render 'layouts/error_messages', object: resource %>
+		   			   </div>
+	   			   <%end%>
+			   </div>
+			</div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+	<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, :role => "form", :class => "form-inline" }) do |f| %>
+		<div class="row">
+				<div class= "text-left col-sm-3"></div>
+				<div class= "text-left col-sm-6">
+					<%= f.label :email, :for => :email %><br />
+					<%= f.email_field :email, autofocus: true, :class => "form-control", :id => "email", :placeholder => "Enter Email Address" %>
+				</div>
+				<div class= "text-left col-sm-3"></div>
+		</div>
+		<br />
+		<div class= "row">
+				<div class= "text-left col-sm-3"></div>
+				<div class= "text-left col-sm-6"></br>
+					<div><%= f.submit "Reset Password", :class => "btn btn-primary" %></div>
+				</div>
+				<div class= "text-left col-sm-3"></div>
+		</div>
+	<% end %>
+	<br />		       
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+		
+		<div class= "row">
+			<div class= "text-left col-sm-3">	
+				<%= render "devise/shared/links" %>
+			</div>
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
-<% end %>
+		</div>		
+	
 
-<%= render "devise/shared/links" %>
+</div>
+

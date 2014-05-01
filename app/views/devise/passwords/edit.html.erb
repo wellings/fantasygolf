@@ -1,16 +1,55 @@
-<h2>Change your password</h2>
+	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				<div class= "text-left col-sm-12"><h4>Change your password</h4></div>
+			</div>
+			
+			<div class= "row">
+ 			   <div class= "text-left col-sm-12">
+				   <% if resource.errors.any? %>
+					   <div class= "alert alert-danger">
+				   		<%= render 'layouts/error_messages', object: resource %>
+		   			   </div>
+	   			   <%end%>
+			   </div>
+			</div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+	<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, :role => "form", :class => "form-inline" }) do |f| %>
+		<div class="row">
+				<div class= "text-left col-sm-3"><%= f.hidden_field :reset_password_token %></div>
+				<div class= "text-left col-sm-6">
+					<%= f.label :password, :for => :password %><br />
+					<%= f.password_field :password, autofocus: true, autocomplete: "off", :class => "form-control", :id => "password", :placeholder => "Enter New Password" %>
+				</div>
+				<div class= "text-left col-sm-3"></div>
+		</div>
+		<div class="row">
+				<div class= "text-left col-sm-3"></div>
+				<div class= "text-left col-sm-6">
+					<%= f.label :password_confirmation, :for => :confirm_password %><br />
+					<%= f.password_field :password_confirmation, autocomplete: "off", :class => "form-control", :id => "password_confirmation", :placeholder => "Confirm New Password" %>
+				</div>
+				<div class= "text-left col-sm-3"></div>
+		</div>
+		<br />
+		<div class= "row">
+				<div class= "text-left col-sm-3"></div>
+				<div class= "text-left col-sm-6"></br>
+					<div><%= f.submit "Change Password", :class => "btn btn-primary" %></div>
+				</div>
+				<div class= "text-left col-sm-3"></div>
+		</div>
+	<% end %>
+	<br />		       
 
-  <div><%= f.label :password, "New password" %><br />
-    <%= f.password_field :password, autofocus: true, autocomplete: "off" %></div>
+		
+		<div class= "row">
+			<div class= "text-left col-sm-3">	
+				<%= render "devise/shared/links" %>
+			</div>
 
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+		</div>		
+	
 
-  <div><%= f.submit "Change my password" %></div>
-<% end %>
+</div>
 
-<%= render "devise/shared/links" %>
+

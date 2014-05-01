@@ -1,26 +1,55 @@
-<div class = 'depot-form'>
+ 	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				<div class= "text-left col-sm-12"><h4>New Golfer</h4></div>
+			</div>
+			
+			<div class= "row">
+ 			   <div class= "text-left col-sm-12">
+				   <% if resource.errors.any? %>
+					   <div class= "alert alert-danger">
+				   		<%= render 'layouts/error_messages', object: resource %>
+		   			   </div>
+	   			   <%end%>
+			   </div>
+			</div>
 
-<fieldset>
-	<legend>New Golfer</legend>
 
+	<%= form_for(resource, as: resource_name, url: golfers_path(resource_name), html: { method: :post, :role => "form", :class => "form-inline" }) do |f| %>
+		<div class="row">
+			
+				<div class= "text-left col-sm-6">
+					<%= f.label :first_name, :for => :first_name %><br />
+					<%= f.text_field :first_name, autofocus: true, :class => "form-control", :id => "first_name", :placeholder => "Enter First Name" %>
+				</div>
+		</div>
+		<div class="row">
+				<div class= "text-left col-sm-6">
+					 <%= f.label :last_name, :for => :last_name %><br />
+					 <%= f.text_field :last_name, :class => "form-control", :id => "last_name", :placeholder => "Enter Lasst Name" %>
+				 </div>
+		</div>
+		<div class= "row">
+				<div class= "text-left col-sm-6">
+					<%= f.label :rank, :for => :rank %><br />
+					<%= f.text_field :rank, :class => "form-control", :id => "rank", :placeholder => "Enter Rank" %>
+				</div>		 
+		</div>
+		<div class= "row">
+				<div class= "text-left col-sm-6">	 
+						 <%= f.label :web_id, :for => :web_id %> <br />
+						 <%= f.text_field :web_id, :class => "form-control", :id => "web_id", :placeholder => "Enter Yahoo IO" %>
+				</div>
+		</div>
+		<br />
+		<div class= "row">
+				<div class= "text-left col-sm-3"></br>
+					<div><%= f.submit "Submit", :class => "btn btn-primary" %></div>
+				</div>
+				
+		</div>
 
-<%= form_for :golfer, url: golfers_path do |f| %>
-  
-  <div><%= f.label :first_name %><br />
-  <%= f.text_field :first_name, autofocus: true %></div>
-
-  <div><%= f.label :last_name %><br />
-  <%= f.text_field :last_name %></div>
-
-  <div><%= f.label :rank %><br />
-  <%= f.text_field :rank %></div>
-
-  <div><%= f.label :web_id %><br />
-  <%= f.text_field :web_id %></div>
-
-  <div><%= f.submit "Submit" %></div>
-<% end %>
- </fieldset>
+	
+	<% end %>
 </div>
 
 

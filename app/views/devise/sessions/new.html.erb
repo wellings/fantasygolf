@@ -1,17 +1,53 @@
-<h2>Sign in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
-
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
+<div class= "mainBG col-sm-5">
+	<div class= "row">
+		<div class= "text-left col-sm-12"><h4>Sign In</h4></div>
+	</div>
+	<div class= "row">
+ 		<div class= "text-left col-sm-12">
+			<% if resource.errors.any? %>
+				<div class= "alert alert-danger">
+					<%= render 'layouts/error_messages', object: resource %>
+		   		</div>
+	   		<%end%>
+		</div>
+	</div>
+	<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, :role => "form", :class => "form-inline" }) do |f| %>
+		<div class="row">
+			<div class= "col-sm-3"></div>
+			<div class= "text-left col-sm-6">
+				<%= f.label :email, :for => :email %><br />
+				<%= f.email_field :email, autofocus: true, :class => "form-control", :id => "email", :placeholder => "Enter Email Address" %>
+			</div>
+			<div class= "col-sm-3"></div>
+		</div>
+		<div class="row">
+			<div class= "col-sm-3"></div>
+			<div class= "text-left col-sm-6">
+				<%= f.label :password, :for => :password %><br />
+				<%= f.password_field :password, autocomplete: "off", :class => "form-control", :id => "password", :placeholder => "Enter Password" %>
+			</div>
+			<div class= "col-sm-3"></div>
+		</div>
+	<% if devise_mapping.rememberable? %>
+		<div class="row">
+			<div class= "col-sm-3"></div>
+			<div class= "col-sm-6">
+				<%= f.label :remember_me, :class => "checkbox-inline" do %>
+					  <%= f.check_box :remember_me %>remember me
+				<% end %>
+			</div>
+			<div class= "col-sm-3"></div>
+	<% end %>
+		<div class="row">
+			<div class= "col-sm-3"></div>
+			<div class= "text-center col-sm-6">
+				<%= f.submit "Sign in", :class => "btn btn-primary" %>
+			</div>
+			<div class= "col-sm-3"></div>
+		</div>
+	<% end %>
 
 <%= render "devise/shared/links" %>
+
+</div>
+

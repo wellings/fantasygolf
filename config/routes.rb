@@ -10,11 +10,14 @@ Rails.application.routes.draw do
    root 'users#index'
 
   # Custom Golfer routes (rank and update_rank)
-   get 'golfers/rank', to: 'golfers#rank', as: :golfer_rank 
+  # get 'golfers/rank', to: 'golfers#rank', as: :golfer_rank 
    post 'golfers/update_rank', to: 'golfers#update_rank', as: :update_golfer_rank
 
    get 'golfers/list', to: 'golfers#list', as: :golfer_list
    get 'golfers/who_has/:id', to: 'golfers#who_has', as: :golfer_who_has
+   get 'golfers/manual_score_update', to: 'golfers#manual_score_update', as: :golfer_manual_score_update
+   post 'golfers/score_update_manually', to: 'golfers#score_update_manually', as: :golfer_score_update_manually
+
    resources :golfers
    get 'selections/golfers', to: 'selections#golfers', as: :selection_golfers
    resources :selections

@@ -1,0 +1,13 @@
+<table border="0" width="600" align="left">
+<tr>
+<td colspan="2"><h1>Update golfer score</h1></td>
+</tr>
+<% form_tag golfer_score_update_manually_path do %>
+  <%for @golfer in @golfers -%>
+  <%= render :partial => 'score_form' %>
+  <%end%>
+<tr>
+	<td><%= submit_tag 'Update' %></td>
+</tr>  
+<% end %>
+</table>

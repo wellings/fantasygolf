@@ -1,18 +1,29 @@
-<h1>Listing golfers</h1>
-
-<table>
-  <tr>
-  </tr>
-
-<% for golfer in @golfers %>
-  <tr>
-  	<td><%=golfer.full_name%></td>
-	<td><%= link_to 'Edit', edit_golfer_path(golfer) %></td>
-        <td><%= link_to 'Delete', golfer_path(golfer), :method => :delete, :confirm => 'Are you sure?' %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New golfer', new_golfer_path %>
+		<div class= "mainBG col-sm-5">
+			<div class= "row">
+				<div class= "text-left col-sm-12"><h4>Update Golfer Rank</h4></div>
+			</div>
+			<div class= "row">    
+				<div class= "col-sm-12"><%= link_to 'New golfer', new_golfer_path %></div>
+			</div>
+			<br/>
+			<%= form_for :golfer, url: update_golfer_rank_path, html: { method: :post, :role => "form", :class => "form-inline" } do %>
+			<% @golfers.each do |golfer| %>
+				<div class= "row">    
+					<div class= "text-left col-sm-5">       
+						<%= golfer.full_name%>
+					</div>
+					<div class= "text-left col-sm-2">
+						<p><%= fields_for "golfer[]", golfer do |golfer_fields| %>
+						<%= golfer_fields.text_field :rank, :class => "form-control", :id => "rank" %></p>
+					</div>
+					<div class= "text-left col-sm-5"><%= link_to 'Edit', edit_golfer_path(golfer) %> | 
+						<%= link_to 'Delete', golfer_path(golfer), :method => :delete,  data: { confirm: 'Are you sure?' } %>
+					</div>
+				</div>
+			<% end %>
+			<% end %>
+				
+			<%= submit_tag 'Update', :class => "btn btn-primary" %>
+			</div>
+			<% end %>
+		</div>

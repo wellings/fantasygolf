@@ -5,12 +5,6 @@
 html {
   overflow-y: scroll;
 }
-/*  background: url(background.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-*/
 
 body {
   padding-top: 60px;
@@ -32,6 +26,10 @@ textarea {
 }
 
 td.myGolfer{
+	max-width: 140px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-top: 0px;
@@ -80,7 +78,12 @@ li.main{
    padding: 10px;
 }
 
-.mainBG a { 
+.mainBG a:link { 
+	color: #FFFFFF;
+        text-decoration:underline;	
+}
+
+.mainBG a:visited { 
 	color: #FFFFFF;
         text-decoration:underline;	
 }
@@ -88,6 +91,26 @@ li.main{
 .mainBG a:hover { 
 	color: #FFFFFF; 
 	background-color:#000000; 
+}
+
+.mainBG a:active { 
+	max-width: 60px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: #FFFFFF;
+        text-decoration:underline;	
+}
+
+.text-span{
+    width: 100%;
+  }
+
+
+.hideOverflow {
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 
 .field_with_errors {

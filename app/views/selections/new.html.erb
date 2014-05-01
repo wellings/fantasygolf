@@ -1,7 +1,7 @@
 
 	   	<div class= "mainBG col-sm-5">
 			<div class= "row">
-				<div class= "text-left col-sm-12"><h4>Select <%=session[:select_count].ordinalize%> Golfer</h4></div>
+				<div class= "text-left col-sm-12"><h4>Golfer #<%=session[:select_count]%></h4></div>
 			</div>
 			<div class= "row">
 				<div class= "text-left col-sm-12">			
@@ -12,10 +12,15 @@
 			</div>
       
 			<div class= "row">    
-				<%= form_tag :action => 'create' do %>
-					<%= render :partial => 'form' %>
-				<%= submit_tag "Next" %>
-				<% end %>
+				<div class= "text-left col-sm-12">Please select ONE golfer</div>
 			</div>
-    		</div>
 
+			<div class= "row">    
+				<div class= "text-left col-sm-12"><hr/></div>
+			</div>
+			<%= form_tag :action => 'create' do %>
+				  <%= render :partial => 'form' %>
+				  <%= submit_tag "Next", :class => "btn btn-primary"  %>
+			<% end %>
+			
+    		</div>

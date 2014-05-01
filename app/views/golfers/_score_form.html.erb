@@ -1,0 +1,13 @@
+<tr>
+	<td><%= error_messages_for 'golfer' %></td>
+</tr>
+<!--[form:golfer]-->
+<tr>
+	<td width="25%"><%= @golfer.full_name%></td>
+	<td width="10%"><%= text_field "golfer[]", :score , :size=> 3%></td>
+	<td width="10%"><%= text_field "golfer[]", :thru , :size=> 3%></td>
+	<td width="55%"><%= text_field "golfer[]", :web_id , :size=> 3%></td>
+
+</tr>	 
+<!--[eoform:golfer]-->
+

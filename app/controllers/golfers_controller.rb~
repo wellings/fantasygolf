@@ -1,6 +1,6 @@
 class GolfersController < ApplicationController
  
-       
+     
 def index
     @golfers = Golfer.order('golfers.last_name asc').all
 
@@ -42,17 +42,17 @@ def index
   def create
     @golfer = Golfer.new(golfer_params)
 
-    respond_to do |format|
+  #  respond_to do |format|
       if @golfer.save
         flash[:notice] = 'Golfer was successfully created.'
-        format.html { redirect_to golfers_path }
-        format.xml  { render :xml => @golfer, :status => :created, :location => @golfer }
+        redirect_to golfers_path
+  # format.xml  { render :xml => @golfer, :status => :created, :location => @golfer }
       else
-        flash[:error] = 'Golfer was NOT successfully created.'
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @golfer.errors, :status => :unprocessable_entity }
+        flash[:alert] = 'Golfer was NOT successfully created.'
+        render :action => "new" 
+       # format.xml  { render :xml => @golfer.errors, :status => :unprocessable_entity }
       end
-    end
+  #  end
   end
 
   # PUT /golfers/1
@@ -84,9 +84,6 @@ def index
     end
   end
   
-  def rank
-    @golfers = Golfer.order('golfers.last_name asc').all
-  end
   
   def update_rank
     params[:golfer].each do |idx, golfer|

@@ -10,6 +10,7 @@
     <![endif]-->
 </head>
 <body>
+<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
 <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -57,7 +58,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-3"></div>
-		<div class="text-center col-sm-5"><small>Last Update: 4/12 11:30 am<%=sql:getTimestamp colName="LastUpdate" format="M/d h:mm a" %></small></div>
+		<div class="text-center col-sm-5"><small>Last Update: 4/12 11:30 am</small></div>
 		<div class="col-sm-4"></div>
 	</div>
 	<div class = "row">
@@ -77,10 +78,10 @@
  		</div>
 
 	  <%= yield %>
-	<div class= "col-sm-4">
-  		<div class= "container">
-		  
-   		</div>
+	  <div class= "col-sm-4">
+		 <div id="fb-root"></div> 
+<div class="fb-post" data-href="https://www.facebook.com/permalink.php?story_fbid=847545545259015&amp;id=847543381925898" data-width="466"><div class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/permalink.php?story_fbid=847545545259015&amp;id=847543381925898">Post</a> by <a href="https://www.facebook.com/pages/Fantasy-Golf-Majors/847543381925898">Fantasy Golf Majors</a>.</div></div> 
+		<div class="fb-comments" data-href="https://www.facebook.com/pages/Fantasy-Golf-Majors/847543381925898" data-width="450" data-numposts="20" data-colorscheme="light"></div>		
 	</div>
      </div>
   </div>

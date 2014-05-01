@@ -23,7 +23,7 @@ class SelectionsController < ApplicationController
   def create
     @player_selection = Selection.new(selection_params)
     if @player_selection.save
-      flash[:notice] = "Golfer #{session[:select_count]} selection was successfully created."
+#      flash[:notice] = "Golfer #{session[:select_count]} selection was successfully created."
       session[:select_count] += 1
       if session[:select_count] < 11 
         redirect_to new_selection_path(current_user)

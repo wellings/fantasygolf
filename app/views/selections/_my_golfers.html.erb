@@ -1,3 +1,15 @@
+<%if current_user.email == "jeff@fgm.com" %>
+<ul class="list-unstyled">
+	<li>Number of players: <strong></strong></li>
+</ul>
+<ul class="list-unstyled">
+	<li><%=link_to "Update Golfers", golfers_path %></li>
+	<li><%=link_to "Update Golfer Scores (automatically)", update_golfer_rank_path %></li> 
+	<li><%=link_to "Update Golfer Scores (manually)", golfer_manual_score_update_path %></li>
+	<li><%=link_to 'Send Email to All', "/" %></li>
+	<li><%=link_to 'Send Email to Select', "/" %></li>
+</ul>
+<%else%>
 <ul class="list-unstyled">
 	<li>Overall Rank: <strong><%=3.ordinalize%></strong></li>
 	<li>Group: <strong>No Group</strong></li>
@@ -9,11 +21,9 @@
 	<li><%=link_to "Golfer Leaderboard", golfer_list_path %></li>
 </ul>
 <ul class="list-unstyled">
-	<li><%=link_to "Choose My Golfers", selection_golfers_path %></li>
+	<li><%= button_to "Select Golfers", selection_golfers_path, data: { confirm: "(This will remove your all of your current golfers) \n\n                           Are you sure?" }, method: :get, :class =>"btn btn-danger" %></li>
+
 </ul>
-
-
-
 
 	<table>
 		<tr>
@@ -29,4 +39,4 @@
 		</tr>	
 	<%end%>
 	</table>
-
+<%end%>

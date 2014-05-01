@@ -1,6 +1,6 @@
 class GolfersController < ApplicationController
  
-       
+     
 def index
     @golfers = Golfer.order('golfers.last_name asc').all
 
@@ -42,17 +42,17 @@ def index
   def create
     @golfer = Golfer.new(golfer_params)
 
-    respond_to do |format|
+  #  respond_to do |format|
       if @golfer.save
         flash[:notice] = 'Golfer was successfully created.'
-        format.html { redirect_to golfers_path }
-        format.xml  { render :xml => @golfer, :status => :created, :location => @golfer }
+        redirect_to golfers_path
+  # format.xml  { render :xml => @golfer, :status => :created, :location => @golfer }
       else
-        flash[:error] = 'Golfer was NOT successfully created.'
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @golfer.errors, :status => :unprocessable_entity }
+        flash[:alert] = 'Golfer was NOT successfully created.'
+        render :action => "new" 
+       # format.xml  { render :xml => @golfer.errors, :status => :unprocessable_entity }
       end
-    end
+  #  end
   end
 
   # PUT /golfers/1
@@ -84,9 +84,6 @@ def index
     end
   end
   
-  def rank
-    @golfers = Golfer.order('golfers.last_name asc').all
-  end
   
   def update_rank
     params[:golfer].each do |idx, golfer|
@@ -97,13 +94,13 @@ def index
     redirect_to golfer_rank_path
   end
 
-  def edit_score
+  def manual_score_update
     @golfers = Golfer.find_by_sql('SELECT  DISTINCT ( golfer_id ), golfers.id, first_name, last_name, score, thru, web_id 
   FROM selections, golfers WHERE golfers.id = selections.golfer_id
   and golfers.score<>99 ORDER BY last_name ASC')
   end
 
-  def update_score
+  def update_score_manually
     params[:golfer].each do |idx, golfer|
       golfer_score = Golfer.find(idx)
       golfer_score.update_attributes(golfer)
