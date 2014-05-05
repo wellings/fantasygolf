@@ -1,0 +1,70 @@
+
+	   	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				   <table>
+ 					   <tr class="user">
+					     <td class="user text-center"><h4><%=@player.full_name%> (<%=@player.score%>)</h4></td>
+				     	   </tr>
+				   	   <tr class="user">
+					     <td class="user text-left">Tiebreaker: <%=@player.tiebreaker%></td>
+				     	   </tr>
+					   <tr class="user">
+					     <td class="user text-left">Overall Rank: </td>
+				     	   </tr>
+				     	   <tr class="user">
+					     <td class="user text-left">Group Rank: </td>
+					   </tr>
+	  			   </table>
+		   	</div>
+			<div class= "row">
+				<div class="col-sm-12"><hr></div>
+			</div>
+ 
+			<div class= "row">    
+				<div class="user text-center col-sm-2"><h5><b>Rank</b></h5></div>
+				<div class="user text-left col-sm-2"><h5><b>Name</b></h5></div>
+				<div class="user text-center col-sm-2"><h5><b>Score</b></h5></div>
+				<div class="user text-center col-sm-2"><h5><b>Thru</b></h5></div>
+				<div class="user text-center col-sm-2">Who has</div>
+			</div>
+			<%rank = 0%>
+			<%line = false%>
+			<%for selected in @golfers%>
+				<%rank += 1%>
+				<%score = selected.golfer.score%>
+				<%if score > 90 && line == false%>
+					<div class= "row">
+						<div class="col-sm-12"><hr></div>
+				  		<%line = true%>
+					</div>
+				<%end%>
+				<div class="row">
+					<div class="user text-center col-sm-2"><%=selected.sort%></div>
+  					<div class="user text-left col-sm-4"><%=link_to h(selected.golfer.full_name), "#{ApplicationHelper::WEB_URL}#{selected.golfer.first_name}+#{selected.golfer.last_name}/#{selected.golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></div>
+     					<div class="user text-center col-sm-2">
+	  						<%if selected.golfer.score == 0%>
+								E
+	  						<%else%>
+								<%if selected.golfer.score > 90%>
+									<font color="#FF0000">MC</font>
+								<%else%>
+									<%=h (selected.golfer.score)%>
+								<%end%>
+							<%end%>
+					</div>
+     					<div class="user text-center col-sm-2"><%=h (selected.golfer.thru)%></div>
+					<div class="user text-center">
+							<%if line == false%>
+								<%= link_to 'Who has', golfer_who_has_path(selected.golfer.id) %>
+							<%end%>
+					</div>
+				</div>
+					 <%if rank == 5%>
+						 <div class="row"><div class="user text-center col-sm-12">&nbsp;</div></div> 
+					 <%end%>
+ 
+			<%end%>
+					
+    		</div>
+
+

@@ -4,8 +4,8 @@
 </ul>
 <ul class="list-unstyled">
 	<li><%=link_to "Update Golfers", golfers_path %></li>
-	<li><%=link_to "Update Golfer Scores (automatically)", update_golfer_rank_path %></li> 
-	<li><%=link_to "Update Golfer Scores (manually)", golfer_list_path %></li>
+	<li><%=link_to "Update Golfer Scores (web)", golfer_scores_path %></li> 
+	<li><%=link_to "Update Golfer Scores (manually)", golfer_manual_score_update_path %></li>
 	<li><%=link_to 'Send Email to All', "/" %></li>
 	<li><%=link_to 'Send Email to Select', "/" %></li>
 </ul>
@@ -31,10 +31,21 @@
 			<td class="myGolfer text-center"><h5><b>Score</b></h5></td>
 			<td class="myGolfer text-center"><h5><b>Thru</b></h5></td>
 		</tr>
-	<%for my_golfer in Selection.where(:user_id => current_user) -%> 
-	  	<tr class="myGolfer">
-			<td class="myGolfer"><small><%=my_golfer.golfer.full_name%></small></td>
-			<td class="myGolfer text-center"><small><%=my_golfer.golfer.score%></small></td>
+	<%for my_golfer in Selection.includes(:golfer).where(:user_id => current_user).order("golfers.score asc, selections.sort asc") -%> 
+		<tr class="myGolfer">
+			<td class="myGolfer"><small><%=my_golfer.golfer.full_name%></small>
+			</td>
+				<%= link_to edit_selection_path(current_user, :select_count => my_golfer.sort) do %>
+  					<span class="glyphicon glyphicon-edit"></span>
+				<% end %>	
+	
+			<td class="myGolfer text-center"><small>
+								<%if my_golfer.golfer.score > 90%>
+									<font color="#FF0000">MC</font>
+								<%else%>
+									<%=h (my_golfer.golfer.score)%>
+								<%end%>
+							</small></td>
 			<td class="myGolfer text-center"><small><%=my_golfer.golfer.thru%></small></td>
 		</tr>	
 	<%end%>

@@ -1,0 +1,33 @@
+
+	   	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				   <table>
+ 					   <tr class="main">
+					     <td class="main text-center"><h4><%=@player.full_name%> (<%=@player.score%>)</h4></td>
+				     	   </tr>
+				   	   <tr class="main">
+					     <td class="main text-left">Tiebreaker: <%=@player.tiebreaker%></td>
+				     	   </tr>
+					   <tr class="main">
+					     <td class="main text-left">Overall Rank: </td>
+				     	   </tr>
+				     	   <tr class="main">
+					     <td class="main text-left">Group Rank: </td>
+					   </tr>
+	  			   </table>
+		   	</div>
+			<div class= "row">
+				<div class="col-sm-12"><hr></div>
+			</div>
+ 
+			<div class= "row">    
+				<div class="col-sm-2">Rank</div>
+				<div class="col-sm-4">Name</div>
+				<div class="col-sm-2">Score</div>
+				<div class="col-sm-2">Thru</div>
+				<div>Who has</div>
+			</div>
+					
+    		</div>
+
+

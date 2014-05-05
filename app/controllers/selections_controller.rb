@@ -17,22 +17,25 @@ class SelectionsController < ApplicationController
     @selection = Selection.new
     session[:select_count] = 1
     golfers_available
-    render :action => 'new'
+    render :new
   end
 
   def create
     @player_selection = Selection.new(selection_params)
+    #logger.debug "New post: #{@player_selection.attributes.inspect}"
     if @player_selection.save
-#      flash[:notice] = "Golfer #{session[:select_count]} selection was successfully created."
+      flash[:notice] = "Golfer #{session[:select_count]} selection was successfully created."
       session[:select_count] += 1
       if session[:select_count] < 11 
-        redirect_to new_selection_path(current_user)
+        redirect_to new_selection_path
       else
         redirect_to '/'
       end
     else
+	  logger.debug "not saved"
+     flash[:alert] = "Golfer #{session[:select_count]} selection was NOT successfully created."
      golfers_available
-     render new_selection_path
+     render :new
     end
   end
 
@@ -44,19 +47,22 @@ class SelectionsController < ApplicationController
   end
 
   def update
-    @player_selection = Selection.find(params[:player_selection][:id])
-    if @player_selection.update_attributes(params[:player_selection])
-      flash[:notice] = 'Golfer Select was successfully updated.'
+    @player_selection = Selection.where("user_id = ? and sort = ?", params[:id], params[:select_count]).first
+    #logger.debug "Update post: #{@player_selection.attributes.inspect}"
+    if @player_selection.update(selection_params)
+      flash[:notice] = 'Golfer Selected was successfully updated.'
       redirect_to '/'
     else
-      render :action => 'edit'
+      flash[:alert] = 'Golfer Selected was NOT successfully updated.'
+      golfers_available
+      render :edit
     end
   end
 
   def destroy
-    PlayerSelection.find(params[:id]).destroy
+    PlayerSelection.where("id = ?", params[:id]).destroy
     logger.info "Deleted Player Selection with id = #{params[:id]}"
-    redirect_to :action => 'list'
+    redirect_to :list
   end
 
   def show_golfers
@@ -114,7 +120,7 @@ def golfers_available
     @golfers = Golfer.find_golfers(start_golfer, end_golfer)
     @player = current_user
     @my_golfers = Selection.where(user_id: current_user)    
-    @selected = Selection.where(user_id: current_user, rank: session[:select_count])    
+    @selected = Selection.where(user_id: current_user, sort: session[:select_count]).first    
 
 end
 private

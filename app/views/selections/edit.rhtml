@@ -1,0 +1,56 @@
+<h3><%=current_user.first_name%> <%=current_user.last_name%></h3>
+<h2>Golfer <%=session[:select_count]%> Selection</h2>
+<% form_tag :action => 'update', :id => @player_selection do %>
+
+
+<div class='depot-form'>
+
+<%= error_messages_for :player_selection %>
+
+<h2></h2>
+<fieldset>
+	<legend>Please select ONE golfer</legend>
+
+<%index=0%>	
+<table>
+	<tr>
+	  <td>
+<%for golfer in @golfers -%>
+  	<%not_selected = true%>
+    <%for selection in @my_golfers%>
+  		<%if golfer.id == selection.golfer_id%>
+			<%not_selected = false%>
+ 		<%end%>
+	<%end%>
+  <%if not_selected%>	
+  <%if session[:select_count].to_i < 7%>
+  <%= radio_button :player_selection, :golfer_id, golfer.id%><%=link_to golfer.first_name + ' ' + golfer.last_name, "http://sports.yahoo.com/golf/pga/players/#{selection.golfer.first_name}+#{selection.golfer.last_name}/#{selection.golfer.web_id}/scorecard/2009/13", :popup => true %></td>
+  	<br/>
+  <%else%>
+  <%index=index+1%>
+    <%if index % 31 == 0%>
+  	  </td><td>
+    <%end%>
+  <%= radio_button :player_selection, :golfer_id, golfer.id%><%=link_to golfer.first_name + ' ' + golfer.last_name, "http://sports.yahoo.com/golf/pga/players/#{selection.golfer.first_name}+#{selection.golfer.last_name}/#{selection.golfer.web_id}/scorecard/2009/13", :popup => true %><br/>
+  <%end%>
+<%end%>
+<%=hidden_field :player_selection, :user_id, :value => current_user.id %>
+<!--<%=text_field :number_count, @number_count, :value => session[:select_count] %>-->
+<%=hidden_field :player_selection, :rank, :value => session[:select_count] %>
+<%=hidden_field :player_selection, :id, :value => @selected.id %>
+<% end %>
+
+
+	</td>
+  </tr>
+</table>
+
+
+</fieldset>
+
+</div>
+
+<%= submit_tag "Save" %>
+
+<% end %>
+

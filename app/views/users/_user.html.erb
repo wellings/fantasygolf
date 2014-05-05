@@ -10,7 +10,7 @@
 	  		<td class="main text-center"><%=@rank%></td>
 			<td class="main text-left"><%=link_to h(user.full_name), users_golfers_path(user.id) %></td>
 			<td class="main text-center">	
-				<%if score > 50%>
+				<%if score > 90%>
 					<font color="#FF0000">MC</font>
 				<%else%>
 					<%=h score%>

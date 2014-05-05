@@ -8,7 +8,7 @@
 <%end%>
 		<tr class="main">
 	  		<td class="main text-center"><%=@rank%></td>
-			<td><%=link_to h(user.full_name), users_golfers_path(user.id) %></td>
+			<td class="main text-left"><%=link_to h(user.full_name), users_golfers_path(user.id) %></td>
 			<td class="main text-center">	
 				<%if score > 50%>
 					<font color="#FF0000">MC</font>

@@ -1,5 +1,7 @@
 class Golfer < ActiveRecord::Base
 
+  belongs_to :selections, dependent: :delete
+	
   validates :rank, :first_name, :last_name, presence: true
 
 

@@ -33,7 +33,7 @@
 				</div>		 
 				<div class= "text-left col-sm-4"> 
 					<%= f.label :tiebreaker, :for => :tiebreaker %><br />
-					<%= f.text_field :tiebreaker, :class => "form-control", :id => "tiebreaker", :placeholder => "Tiebreaker" %>
+					<%= f.text_field :tiebreaker, :class => "form-control", :id => "tiebreaker", :placeholder => "i.e. -7" %>
 				</div>
 		</div>
 		<div class= "row">

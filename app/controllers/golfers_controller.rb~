@@ -1,87 +1,50 @@
 class GolfersController < ApplicationController
  
      
-def index
-    @golfers = Golfer.order('golfers.last_name asc').all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @golfers }
-    end
+  def index
+    @golfers = Golfer.order('last_name asc, first_name asc').all
   end
 
-  # GET /golfers/1
-  # GET /golfers/1.xml
   def show
-    @golfer = Golfer.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @golfer }
-    end
+    @golfer = Golfer.where("id = ?", params[:id])
   end
 
-  # GET /golfers/new
-  # GET /golfers/new.xml
   def new
     @golfer = Golfer.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @golfer }
-    end
   end
 
-  # GET /golfers/1/edit
   def edit
-    @golfer = Golfer.find(params[:id])
+    @golfer = Golfer.where("id = ?", params[:id]).first
   end
 
-  # POST /golfers
-  # POST /golfers.xml
   def create
     @golfer = Golfer.new(golfer_params)
 
-  #  respond_to do |format|
       if @golfer.save
         flash[:notice] = 'Golfer was successfully created.'
         redirect_to golfers_path
-  # format.xml  { render :xml => @golfer, :status => :created, :location => @golfer }
       else
         flash[:alert] = 'Golfer was NOT successfully created.'
-        render :action => "new" 
-       # format.xml  { render :xml => @golfer.errors, :status => :unprocessable_entity }
+        render new_golfer_path #:action => "new" 
       end
-  #  end
   end
 
-  # PUT /golfers/1
-  # PUT /golfers/1.xml
   def update
-    @golfer = Golfer.find(params[:id])
+    @golfer = Golfer.where("id = ?", params[:id]).first
 
-    respond_to do |format|
-      if @golfer.update_attributes(golfer_params)
+      if @golfer.update(golfer_params)
         flash[:notice] = 'Golfer was successfully updated.'
-        format.html { redirect_to golfers_path }
-        format.xml  { head :ok }
+        redirect_to golfers_path
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @golfer.errors, :status => :unprocessable_entity }
+	flash[:alert] = 'Golfer was NOT successfully updated.'
+        render edit_golfer_path #:action => "edit"
       end
-    end
   end
 
-  # DELETE /golfers/1
-  # DELETE /golfers/1.xml
   def destroy
-    @golfer = Golfer.find(params[:id])
+    @golfer = Golfer.where("id = ?", params[:id]).first
     @golfer.destroy
-
-    respond_to do |format|
-      format.html { redirect_to :controller => 'golfers' }
-      format.xml  { head :ok }
-    end
+    redirect_to golfers_path #:controller => 'golfers'
   end
   
   
@@ -94,35 +57,32 @@ def index
     redirect_to golfer_rank_path
   end
 
-  def edit_score
+  def manual_score_update
     @golfers = Golfer.find_by_sql('SELECT  DISTINCT ( golfer_id ), golfers.id, first_name, last_name, score, thru, web_id 
   FROM selections, golfers WHERE golfers.id = selections.golfer_id
   and golfers.score<>99 ORDER BY last_name ASC')
   end
 
-  def update_score
+  def score_update_manually
     params[:golfer].each do |idx, golfer|
       golfer_score = Golfer.find(idx)
       golfer_score.update_attributes(golfer)
     end
     flash[:notice] = 'Golfer scores was successfully updated.'
 
-    @players = User.find(:all)
+    @players = User.all
     for player in @players
       sort = 0
-      @player_selection = Selection.find(:all,
-                                         :conditions => ['user_id = ?', player.id],
-                                         :include => 'golfer',
-                                         :order => 'golfers.score asc')
+      @player_selection = Selection.includes(:golfer).where("user_id = ?", player.id).order('golfers.score asc').all
 
       for selection in @player_selection
-        sort += 1;
-        score_sort = Selection.find(selection.id)
+        sort += 1
+        score_sort = Selection.where("id = ?", selection.id).first
         score_sort.sort = sort
         score_sort.save
 
-        player = User.find(selection.user_id)
-        player.score = Selection.sum('golfers.score', :include => 'golfer', :conditions => ['user_id = ? and selections.sort < 6', selection.user_id])
+        player = User.where("id = ?", selection.user_id).first
+        player.score = Selection.includes(:golfer).where("user_id = ? and selections.sort < 6", selection.user_id).sum('golfers.score')
         player.save
       end 
     end
@@ -143,63 +103,67 @@ def index
  end
  
  def who_has
-   @users = Selection.where(:golfer_id => params[:id]).all
-   @golfer = Golfer.where(params[:id]).first
+   @users = Selection.where("golfer_id = ?", params[:id]).all
+   @golfer = Golfer.where("id = ?", params[:id]).first
  end
 
  def golfer_scores
+    require 'open-uri'
+    require 'nokogiri'
+
    @golfers = Golfer.find_by_sql('SELECT  DISTINCT ( golfer_id ), golfers.id, first_name, last_name, score, thru, web_id
        FROM selections, golfers WHERE golfers.id = selections.golfer_id
        and golfers.score<>99 ORDER BY last_name ASC')
 
   for golfer in @golfers
 
-    retryable(:tries => 20, :on => OpenURI::HTTPError) do
-      @doc = Hpricot(open("http://sports.yahoo.com/golf/pga/players/#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}/scorecard/2013/33"))
-      logger.info "http://sports.yahoo.com/golf/pga/players/#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}/scorecard/2013/33"
+    	  retryable(:tries => 5, :on => OpenURI::HTTPError) do
+      @doc = Nokogiri::HTML(open("#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}"))
+      logger.info "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}"
     end
 
     score = @doc.search("//div[@class='playerStats']/ul/li[5]/span").inner_html
     thru = @doc.search("//div[@class='playerStats']/ul/li[4]/span").inner_html
-
-    golfer_score = Golfer.find(golfer.id)
+    logger.info score
+    if score == "-" 
+	    score = 99 
+    end
+    
+    golfer_score = Golfer.where("id = ?", golfer.id).first
     golfer_score.update_attribute('score', score)
     golfer_score.update_attribute('thru', thru)
 
   end
     
-    @players = User.find(:all)
-
+    @players = User.all
     for player in @players
-
       sort = 0
-      @player_selection = Selection.find(:all,
-                                         :conditions => ['user_id = ?', player.id],
-                                         :include => 'golfer',
-                                         :order => 'golfers.score asc')
+      @player_selection = Selection.includes(:golfer).where("user_id = ?", player.id).order('golfers.score asc').all
 
       for selection in @player_selection
-
-        sort += 1;
-        score_sort = Selection.find(selection.id)
+        sort += 1
+        score_sort = Selection.where("id = ?", selection.id).first
         score_sort.sort = sort
         score_sort.save
 
-        player = User.find(selection.user_id)
-        player.score = Selection.sum('golfers.score', :include => 'golfer', :conditions => ['user_id = ? and selections.sort < 6', selection.user_id])
+        player = User.where("id = ?", selection.user_id).first
+        player.score = Selection.includes(:golfer).where("user_id = ? and selections.sort < 6", selection.user_id).sum('golfers.score')
         player.save
-        
       end 
     end
     redirect_to '/'
-
+        
 end
 
-private
 
 private
+
   def golfer_params    
     params.require(:golfer).permit(:first_name, :last_name, :rank, :web_id)
+  end
+
+  def selection_params    
+    params.require(:selection).permit(:user_id, :sort, :rank, :golfer_id)
   end
 
 def retryable(options = {}, &block)

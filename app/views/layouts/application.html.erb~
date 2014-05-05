@@ -80,8 +80,8 @@
 	  <%= yield %>
 	  <div class= "col-sm-4">
 		 <div id="fb-root"></div> 
-<div class="fb-post" data-href="https://www.facebook.com/permalink.php?story_fbid=847545545259015&amp;id=847543381925898" data-width="466"><div class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/permalink.php?story_fbid=847545545259015&amp;id=847543381925898">Post</a> by <a href="https://www.facebook.com/pages/Fantasy-Golf-Majors/847543381925898">Fantasy Golf Majors</a>.</div></div> 
-		<div class="fb-comments" data-href="https://www.facebook.com/pages/Fantasy-Golf-Majors/847543381925898" data-width="450" data-numposts="20" data-colorscheme="light"></div>		
+<div class="fb-post" data-href="https://www.facebook.com/permalink.php?story_fbid=847545545259015&amp;id=847543381925898" data-width="400"><div class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/permalink.php?story_fbid=847545545259015&amp;id=847543381925898">Post</a> by <a href="https://www.facebook.com/pages/Fantasy-Golf-Majors/847543381925898">Fantasy Golf Majors</a>.</div></div> 
+		<div class="fb-comments" data-href="https://www.facebook.com/pages/Fantasy-Golf-Majors/847543381925898" data-width="400" data-numposts="20" data-colorscheme="light"></div>		
 	</div>
      </div>
   </div>

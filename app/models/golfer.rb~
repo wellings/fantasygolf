@@ -1,16 +1,13 @@
 class Golfer < ActiveRecord::Base
 
+  belongs_to :selections, dependent: :delete_all
+	
   validates :rank, :first_name, :last_name, presence: true
 
 
 
 def full_name
   self.first_name + ' ' + self.last_name
-end
-
-def self.find_golfers2(start_golfer, end_golfer)
-    find(:all, :conditions => ['rank > ? and rank < ?', start_golfer, end_golfer],
-                            :order => 'rank asc, last_name asc')
 end
 
 def self.find_golfers(start_golfer, end_golfer)

@@ -1,57 +1,67 @@
-
+	   	
 	   	<div class= "mainBG col-sm-5">
 			<div class= "row">
-			   <ul class="list-unstyled">
-				<li><div class= "text-left"><h4><%=@player.full_name%> (<%=@player.score%>)</h4></div></li>
-				<li class="main">Tiebreaker: <%=@player.tiebreaker%></li>
-				<li class="main">Overall Rank: </li>
-			  	<li class="main">Group Rank: </li>
-			  </ul>
-		  	 </div>
-			<div class= "row">    
 				   <table>
- 					   <tr>
-					     <td class="main text-center"><h5><b>Rank</b></h5></td>
-					     <td class="main text-left"><h5><b>Name</b></h5></td>
-					     <td class="main text-center"><h5><b>Score</b></h5></td>
-					     <td class="main text-center"><h5><b>Thru</b></h5></td>
-					</tr>
-					 <%rank = 0%>
-					 <%line = false%>
-					 <%for selected in @golfers%>
-						<%rank += 1%>
-					   	<%score = selected.golfer.score%>
-						<%if score > 90 && line == false%>
-							  <tr><td colspan="5"><hr></td></tr>
-							  <%line = true%>
-						<%end%>
-					<tr>
-						<td class="main text-center"><%=selected.sort%></td>
-	   					<td class="main text-left"><%=link_to h(selected.golfer.full_name), "#{ApplicationHelper::WEB_URL}#{selected.golfer.first_name}+#{selected.golfer.last_name}/#{selected.golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></td>
-     						<td class="main text-center">
-	  						<%if selected.golfer.score == 0%>
-	    						   E
-	  						<%else%>
-							   <%=h (selected.golfer.score)%>
-	  						<%end%>
-						</td>
-     						<td class="main text-center"><%=h (selected.golfer.thru)%></td>
-						<td class="main text-center">
-							<%if line == false%>
-								<%= link_to 'Who else', golfer_who_has_path(selected.golfer.id) %>
-							<%end%>
-						</td>
-						<td>
-						</td>
-   					</tr>
-					 <%if rank == 5%>
-						  <tr><td colspan="4">&nbsp;</td></tr> 
-					 <%end%>
- 
-   					<%end%>
-					
-				   </table>
+ 					   <tr class="main">
+					     <td class="main text-center"><h4><%=@player.full_name%> (<%=@player.score%>)</h4></td>
+				     	   </tr>
+				   	   <tr class="main">
+					     <td class="main text-left">Tiebreaker: <%=@player.tiebreaker%></td>
+				     	   </tr>
+					   <tr class="main">
+					     <td class="main text-left">Overall Rank: </td>
+				     	   </tr>
+				     	   <tr class="main">
+					     <td class="main text-left">Group Rank: </td>
+					   </tr>
+	  			   </table>
+		   	</div>
+			<div class= "row">
+				<div class="col-sm-12"><hr></div>
 			</div>
+			<table>
+				<tr>
+					<td class="users text-center"><h5><b>Rank</b></h5></td>
+					<td class="users text-left"><h5><b>Name</b></h5></td>
+					<td class="users text-center"><h5><b>Score</b></h5></td>
+					<td class="users text-center"><h5><b>Thur</b></h5></td>
+					<td class="users text-center"><h5><b></b></h5></td>
+				</tr>
+				<%rank = 0%>
+				<%line = false%>
+				<%for selected in @golfers%>
+					<%rank += 1%>
+					<%score = selected.golfer.score%>
+					<%if score > 90 && line == false%>
+						<div class= "row">
+							<div class="col-sm-12"><hr></div>
+				  			<%line = true%>
+						</div>
+					<%end%>
+
+				<tr class="users">
+	  				<td class="users text-center"><%=selected.sort%></td>
+					<td class="users text-left"><%=link_to h(selected.golfer.full_name), "#{ApplicationHelper::WEB_URL}#{selected.golfer.first_name}+#{selected.golfer.last_name}/#{selected.golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></td>
+					<td class="users text-center">	
+	  						<%if selected.golfer.score == 0%>
+								E
+	  						<%else%>
+								<%if selected.golfer.score > 90%>
+									<font color="#FF0000">MC</font>
+								<%else%>
+									<%=h (selected.golfer.score)%>
+								<%end%>
+							<%end%>
+					</td>
+					<td class="users text-center"><%=h (selected.golfer.thru)%></td>	
+					<td class="users text-center"><%= link_to "Who Has", golfer_who_has_path(selected.golfer_id) %></td>	
+				</tr>
+					 <%if rank == 5%>
+						 <div class="row"><div class="user text-center col-sm-12">&nbsp;</div></div> 
+					 <%end%>
+				<%end%>
+			</table>
+					
     		</div>
 
 

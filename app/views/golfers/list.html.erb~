@@ -19,12 +19,16 @@
 	  						<%if golfer.score == 0%>
 	    						   E
 	  						<%else%>
-							   <%=h (golfer.score)%>
-	  						<%end%>
+								<%if score > 50%>
+									<font color="#FF0000">MC</font>
+								<%else%>
+									<%=h (golfer.score)%>
+								<%end%>
+     	  						<%end%>
 						</td>
      						<td class="main text-center"><%=h (golfer.thru)%></td>
 						<td class="main text-center">
-							<%= link_to 'Who has him', golfer_who_has_path(golfer.id) %>
+							<%= link_to 'Who has', golfer_who_has_path(golfer.id) %>
 						</td>
 						<td>
 						</td>

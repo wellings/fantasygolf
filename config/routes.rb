@@ -17,6 +17,7 @@ Rails.application.routes.draw do
    get 'golfers/who_has/:id', to: 'golfers#who_has', as: :golfer_who_has
    get 'golfers/manual_score_update', to: 'golfers#manual_score_update', as: :golfer_manual_score_update
    post 'golfers/score_update_manually', to: 'golfers#score_update_manually', as: :golfer_score_update_manually
+   get 'golfers/golfer_scores', to: 'golfers#golfer_scores', as: :golfer_scores
 
    resources :golfers
    get 'selections/golfers', to: 'selections#golfers', as: :selection_golfers
