@@ -53,16 +53,10 @@
 				<div class= "text-left col-sm-12"><i>*we need your current password to confirm your changes</i></div>
 		</div>
 
-		<div class= "row">
-				<div class= "text-left col-sm-12">
-						 <%= f.label :current_password, :for => :current_password %> <br />
-						 <%= f.password_field :current_password, autocomplete: "off", :class => "form-control", :id => "current_password", :placeholder => "Enter Current Password" %>
-				</div>
-		</div>
 		<br />
 		<div class= "row">
 				<div class= "text-left col-sm-3"></br>
-					<div><%= f.submit "Update", :class => "btn btn-default" %></div>
+					<div><%= f.submit "Update", :class => "btn btn-primary" %></div>
 				</div>
 				
 		</div>

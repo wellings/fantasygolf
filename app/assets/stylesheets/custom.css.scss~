@@ -38,8 +38,8 @@ td.myGolfer{
 }
 
 td.users{
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
@@ -129,10 +129,10 @@ li.main{
 }
 
 
-.form-inline .row input {
+/*.form-inline .row input {
     width:100%;
 }
-
+*/
 h1 {
   font-size: 3em;
   letter-spacing: -2px;

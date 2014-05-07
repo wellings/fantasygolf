@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-has_many :golfers, dependent: :delete_all
+has_many :selections, dependent: :delete_all
 
   validates :first_name, :last_name, :tiebreaker, presence: true
   # validates :username, uniqueness: true, if: -> { self.username.present? }
