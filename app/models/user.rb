@@ -13,4 +13,19 @@ has_many :selections, dependent: :delete_all
   def full_name
     self.first_name.capitalize + ' ' + self.last_name.capitalize
   end
+
+  def my_rank(rank)
+	rank_count = User.where("rank = ?", rank).count
+	if rank_count > 1
+		"(tied w/ 2)"
+	end
+  end
+
+  def overall_rank(rank)
+	rank_count = User.where("rank = ?", rank).count
+	if rank_count > 1
+		"(tied with #{rank_count-1} others)"
+	end
+  end
+
 end

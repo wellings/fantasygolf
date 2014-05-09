@@ -32,7 +32,6 @@ class SelectionsController < ApplicationController
         redirect_to '/'
       end
     else
-	  logger.debug "not saved"
      flash[:alert] = "Golfer #{session[:select_count]} selection was NOT successfully created."
      golfers_available
      render :new
@@ -47,7 +46,7 @@ class SelectionsController < ApplicationController
   end
 
   def update
-    @player_selection = Selection.where("user_id = ? and sort = ?", params[:id], params[:select_count]).first
+    @player_selection = Selection.where("user_id = ? and rank = ?", params[:id], params[:select_count]).first
     #logger.debug "Update post: #{@player_selection.attributes.inspect}"
     if @player_selection.update(selection_params)
       flash[:notice] = 'Golfer Selected was successfully updated.'
@@ -71,25 +70,30 @@ class SelectionsController < ApplicationController
                                     :conditions => ['player_id = ?', params[:id]])
   end
 
-  def update_score_rank
-    @players = Player.find(:all)
-    for player in @players
-      rank = 0
-      @player_selection = PlayerSelection.find(:all,
-                                             :conditions => ['player_id = ?', player.id])
-      for selection in @player_selection
-        rank = rank + 1;
-        score_rank = PlayerSelection.find(selection.id)
-        score_rank.rank = rank
-        score_rank.save
-
-        player = Player.find(selection.player_id)
-        player.score = PlayerSelection.sum('golfers.score', :include => 'golfer', :conditions => ['player_id = ? and player_selections.rank < 6', selection.player_id])
-        player.save
-      end 
-    end
-    redirect_to '/'
+  def clear
+     ActiveRecord::Base.connection.execute("Truncate selections;")
+     redirect_to root_path
   end
+
+#  def update_score_rank
+#    @players = Player.find(:all)
+#    for player in @players
+#      rank = 0
+#      @player_selection = PlayerSelection.find(:all,
+#                                             :conditions => ['player_id = ?', player.id])
+#      for selection in @player_selection
+#        rank = rank + 1;
+#        score_rank = PlayerSelection.find(selection.id)
+#        score_rank.rank = rank
+#        score_rank.save
+
+#        player = Player.find(selection.player_id)
+#        player.score = PlayerSelection.sum('golfers.score', :include => 'golfer', :conditions => ['player_id = ? and player_selections.rank < 6', selection.player_id])
+#        player.save
+#      end 
+#    end
+#    redirect_to '/'
+#  end
 
 private
 
@@ -120,7 +124,7 @@ def golfers_available
     @golfers = Golfer.find_golfers(start_golfer, end_golfer)
     @player = current_user
     @my_golfers = Selection.where(user_id: current_user)    
-    @selected = Selection.where(user_id: current_user, sort: session[:select_count]).first    
+    @selected = Selection.where(user_id: current_user, rank: session[:select_count]).first    
 
 end
 private

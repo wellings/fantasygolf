@@ -73,7 +73,7 @@ class GolfersController < ApplicationController
       golfer_score = Golfer.find(idx)
       golfer_score.update_attributes(golfer)
     end
-    flash[:notice] = 'Golfer scores was successfully updated.'
+    flash[:notice] = 'Golfer scores were successfully updated.'
 
     @players = User.all
     for player in @players
@@ -91,6 +91,30 @@ class GolfersController < ApplicationController
         player.save
       end 
     end
+    ActiveRecord::Base.connection.execute("SET @rnk=0;")
+    ActiveRecord::Base.connection.execute("SET @rank=0;")    
+    ActiveRecord::Base.connection.execute("SET @curscore=0;")
+    ActiveRecord::Base.connection.execute("update users u join
+						(
+						select AA.*, BB.id,
+						(@rnk:=@rnk+1) rnk,
+						(@rank:=IF(@curscore=AA.score,@rank, @rnk)) rank,
+						(@curscore:=AA.score) as newscore
+						FROM
+						(
+						select * from
+						(select count(1) scorecount,score
+						FROM users 
+						where id in (select distinct user_id from selections)
+						GROUP BY score
+						) AAA
+						) AA left join users BB on (BB.score = AA.score and BB.id in (select distinct user_id from selections))
+						order by score asc) A
+						set u.rank = A.rank
+						where u.id in (select distinct user_id from selections)
+						and u.id = A.id;")
+    ActiveRecord::Base.connection.execute("UPDATE users	SET rank = 1 where rank = 0 and id in (select distinct user_id from selections);")
+
     redirect_to '/'
   end
 
@@ -129,7 +153,6 @@ class GolfersController < ApplicationController
 
     score = @doc.search("//div[@class='playerStats']/ul/li[5]/span").inner_html
     thru = @doc.search("//div[@class='playerStats']/ul/li[4]/span").inner_html
-    logger.info score
     if score == "-" 
 	    score = 99 
     end
@@ -156,6 +179,30 @@ class GolfersController < ApplicationController
         player.save
       end 
     end
+    ActiveRecord::Base.connection.execute("SET @rnk=0;")
+    ActiveRecord::Base.connection.execute("SET @rank=0;")    
+    ActiveRecord::Base.connection.execute("SET @curscore=0;")
+    ActiveRecord::Base.connection.execute("update users u join
+						(
+						select AA.*, BB.id,
+						(@rnk:=@rnk+1) rnk,
+						(@rank:=IF(@curscore=AA.score,@rank, @rnk)) rank,
+						(@curscore:=AA.score) as newscore
+						FROM
+						(
+						select * from
+						(select count(1) scorecount,score
+						FROM users 
+						where id in (select distinct user_id from selections)
+						GROUP BY score
+						) AAA
+						) AA left join users BB on (BB.score = AA.score and BB.id in (select distinct user_id from selections))
+						order by score asc) A
+						set u.rank = A.rank
+						where u.id in (select distinct user_id from selections)
+						and u.id = A.id;")
+    ActiveRecord::Base.connection.execute("UPDATE users	SET rank = 1 where rank = 0 and id in (select distinct user_id from selections);")
+
     redirect_to '/'
         
 end

@@ -3,13 +3,13 @@
 			<div class= "row">
 				   <table>
  					   <tr class="main">
-					     <td class="main text-center"><h4><%=@player.full_name%> (<%=@player.score%>)</h4></td>
+						<td class="main text-center"><h4><%=@player.full_name%> (<%=@player.score%>)</h4></td>
 				     	   </tr>
 				   	   <tr class="main">
-					     <td class="main text-left">Tiebreaker: <%=@player.tiebreaker%></td>
+						<td class="main text-left">Tiebreaker: <%=@player.tiebreaker%></td>
 				     	   </tr>
 					   <tr class="main">
-					     <td class="main text-left">Overall Rank: </td>
+						   <td class="main text-left">Overall Rank: <%=@player.rank.ordinalize%> <%=@player.overall_rank(@player.rank)%></td>
 				     	   </tr>
 				     	   <tr class="main">
 					     <td class="main text-left">Group Rank: </td>

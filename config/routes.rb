@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
    resources :golfers
    get 'selections/golfers', to: 'selections#golfers', as: :selection_golfers
+   get 'selections/clear', to: 'selections#clear', as: :selection_clear
    resources :selections
  
   # Example of regular route:

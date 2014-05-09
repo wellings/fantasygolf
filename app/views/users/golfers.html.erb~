@@ -3,13 +3,13 @@
 			<div class= "row">
 				   <table>
  					   <tr class="main">
-					     <td class="main text-center"><h4><%=@player.full_name%> (<%=@player.score%>)</h4></td>
+						<td class="main text-center"><h4><%=@player.full_name%> (<%=@player.score%>)</h4></td>
 				     	   </tr>
 				   	   <tr class="main">
-					     <td class="main text-left">Tiebreaker: <%=@player.tiebreaker%></td>
+						<td class="main text-left">Tiebreaker: <%=@player.tiebreaker%></td>
 				     	   </tr>
 					   <tr class="main">
-					     <td class="main text-left">Overall Rank: </td>
+						   <td class="main text-left">Overall Rank: <%=@player.rank.ordinalize%> <%=@player.my_rank(@player.rank)%></td>
 				     	   </tr>
 				     	   <tr class="main">
 					     <td class="main text-left">Group Rank: </td>
@@ -25,7 +25,7 @@
 					<td class="users text-left"><h5><b>Name</b></h5></td>
 					<td class="users text-center"><h5><b>Score</b></h5></td>
 					<td class="users text-center"><h5><b>Thur</b></h5></td>
-					<td class="users text-center"><h5><b>Who Has</b></h5></td>
+					<td class="users text-center"><h5><b></b></h5></td>
 				</tr>
 				<%rank = 0%>
 				<%line = false%>
@@ -54,11 +54,7 @@
 							<%end%>
 					</td>
 					<td class="users text-center"><%=h (selected.golfer.thru)%></td>	
-					<td class="users text-center">
-						<%= link_to golfer_who_has_path(selected.golfer_id) do %>
-  							<span class="glyphicon glyphicon-user"></span>
-						<% end %>	
-					</td>	
+					<td class="users text-center"><%= link_to "Who Has", golfer_who_has_path(selected.golfer_id) %></td>	
 				</tr>
 					 <%if rank == 5%>
 						 <div class="row"><div class="user text-center col-sm-12">&nbsp;</div></div> 
