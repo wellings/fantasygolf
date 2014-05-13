@@ -1,21 +1,18 @@
 
 <%score = user.score%>
-
 <%if score > 50 && @line == false%>
-<hr>
+	<tr class="main"><td class="main text-center" colspan="4"><hr></td></tr>
 <%@line = true%>
 <%end%>
 		<tr class="main">
 			<td class="main text-center">
-				<%if user.rank == 0%>
-					
-				<%else%>
+				<%if user.rank > 0 %>
 					<%=user.rank%>
 				<%end%>
 			</td>
 			<td class="main text-left"><%=link_to h(user.full_name), users_golfers_path(user.id) %></td>
 			<td class="main text-center">	
-				<%if score > 90%>
+				<%if score > 80%>
 					<font color="#FF0000">MC</font>
 				<%else%>
 					<%=h score%>

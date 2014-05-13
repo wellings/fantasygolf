@@ -1,17 +1,24 @@
-
-
-<!--[form:golfer]-->
-<p><label for="golfer_first_name">First name</label><br/>
-<%= text_field 'golfer', 'first_name'  %></p>
-
-<p><label for="golfer_last_name">Last name</label><br/>
-<%= text_field 'golfer', 'last_name'  %></p>
-
-<p><label for="golfer_rank">Rank</label><br/>
-<%= text_field 'golfer', 'rank'  %></p>
-
-<p><label for="golfer_web_id">Web ID</label><br/>
-<%= text_field 'golfer', 'web_id'  %></p>
-
-<!--[eoform:golfer]-->
-
+			<div class="row">
+				<div class= "text-left col-sm-6">
+					<p><%= f.label :first_name, :for => :first_name %><br/>
+					<%= f.text_field :first_name, :class => "form-control", :id => "first_name", :placeholder => "Enter First Name"  %></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class= "text-left col-sm-6">
+					<p><%= f.label :last_name, :for => :last_name %><br/>
+					<%= f.text_field :last_name, :class => "form-control", :id => "last_name", :placeholder => "Enter Last Name"  %></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class= "text-left col-sm-6">
+					<p><%= f.label :rank, :for => :rank %><br/>
+					<%= f.text_field :rank, :class => "form-control", :id => "rank", :placeholder => "Enter Rank"  %></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class= "text-left col-sm-6">
+					<p><%= f.label :web_id, :for => :web_id %><br/>
+					<%= f.text_field :web_id, :class => "form-control", :id => "web_id", :placeholder => "Enter WebID"  %></p>
+				</div>
+			</div>

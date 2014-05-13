@@ -3,12 +3,15 @@
 	<li>Number of players: <strong></strong></li>
 </ul>
 <ul class="list-unstyled">
-	<li><%=link_to "Update Golfers", golfers_path %></li>
+	<li><%=link_to "Manage Tournaments", tournaments_path %></li>
+	<li><%=link_to "Manage Golfer", golfers_manage_path %></li>
+	<li><%=link_to "Update Golfer Rank", golfers_path %></li>
 	<li><%=link_to "Update Golfer Scores (web)", golfer_scores_path %></li> 
 	<li><%=link_to "Update Golfer Scores (manually)", golfer_manual_score_update_path %></li>
 	<li><%=link_to 'Send Email to All', "/" %></li>
 	<li><%=link_to 'Send Email to Select', "/" %></li>
 	<li><%=link_to "Clear All Selections", selection_clear_path, data: { confirm: "Are you sure?" } %></li>
+	<li><%=link_to "Clear Golfer Score", golfers_clear_score_path, data: { confirm: "Are you sure?" } %></li>
 </ul>
 <%else%>
 <ul class="list-unstyled">
@@ -32,7 +35,7 @@
 </ul>
 <ul class="list-unstyled">
 	<li>
-	<%if Selection.where("user_id = ?", current_user) %>
+	<%if Selection.where("user_id = ?", current_user).count == 10 %>
 		Click <span class="glyphicon glyphicon-edit"></span> to change golfer
 	<%else%>
 		<%= button_to "Select Golfers", selection_golfers_path, method: :get, :class =>"btn btn-danger" %>

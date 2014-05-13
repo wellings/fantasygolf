@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   # get 'golfers/rank', to: 'golfers#rank', as: :golfer_rank 
    post 'golfers/update_rank', to: 'golfers#update_rank', as: :update_golfer_rank
 
+   get 'golfer/clear_scores', to: 'golfers#clear_score', as: :golfers_clear_score
+   get 'golfers/manage', to: 'golfers#manage', as: :golfers_manage
    get 'golfers/list', to: 'golfers#list', as: :golfer_list
    get 'golfers/who_has/:id', to: 'golfers#who_has', as: :golfer_who_has
    get 'golfers/manual_score_update', to: 'golfers#manual_score_update', as: :golfer_manual_score_update
@@ -22,9 +24,12 @@ Rails.application.routes.draw do
 
    resources :golfers
    get 'selections/golfers', to: 'selections#golfers', as: :selection_golfers
+   get 'selections/clear', to: 'selections#clear', as: :selection_clear
    resources :selections
- 
-  # Example of regular route:
+   get 'tournaments/activate', to: 'tournaments#activate', as: :tournament_activate
+   resources :tournaments
+
+   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

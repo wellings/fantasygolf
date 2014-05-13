@@ -1,4 +1,4 @@
-<%= error_messages_for 'golfer' %>
+
 
 <!--[form:golfer]-->
 <p><label for="golfer_first_name">First name</label><br/>

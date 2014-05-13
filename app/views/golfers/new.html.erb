@@ -14,32 +14,8 @@
 			</div>
 
 
-	<%= form_for(resource, as: resource_name, url: golfers_path(resource_name), html: { method: :post, :role => "form", :class => "form-inline" }) do |f| %>
-		<div class="row">
-			
-				<div class= "text-left col-sm-6">
-					<%= f.label :first_name, :for => :first_name %><br />
-					<%= f.text_field :first_name, autofocus: true, :class => "form-control", :id => "first_name", :placeholder => "Enter First Name" %>
-				</div>
-		</div>
-		<div class="row">
-				<div class= "text-left col-sm-6">
-					 <%= f.label :last_name, :for => :last_name %><br />
-					 <%= f.text_field :last_name, :class => "form-control", :id => "last_name", :placeholder => "Enter Lasst Name" %>
-				 </div>
-		</div>
-		<div class= "row">
-				<div class= "text-left col-sm-6">
-					<%= f.label :rank, :for => :rank %><br />
-					<%= f.text_field :rank, :class => "form-control", :id => "rank", :placeholder => "Enter Rank" %>
-				</div>		 
-		</div>
-		<div class= "row">
-				<div class= "text-left col-sm-6">	 
-						 <%= f.label :web_id, :for => :web_id %> <br />
-						 <%= f.text_field :web_id, :class => "form-control", :id => "web_id", :placeholder => "Enter Yahoo IO" %>
-				</div>
-		</div>
+	<%= form_for(@golfer, html: { method: :post, :role => "form", :class => "form-inline" }) do |f| %>
+			<%= render :partial => "form", :locals=>{:f=>f} %>
 		<br />
 		<div class= "row">
 				<div class= "text-left col-sm-3"></br>

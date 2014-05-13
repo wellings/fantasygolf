@@ -14,7 +14,7 @@
 			</div>
 
 
-	<%= form_for(resource, as: resource_name, url: golfer_path(resource_name), html: { method: :post, :role => "form", :class => "form-inline" }) do |f| %>
+	<%= form_for(resource, as: resource_name, url: golfers_path(resource_name), html: { method: :post, :role => "form", :class => "form-inline" }) do |f| %>
 		<div class="row">
 			
 				<div class= "text-left col-sm-6">

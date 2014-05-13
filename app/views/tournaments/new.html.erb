@@ -1,6 +1,6 @@
  	<div class= "mainBG col-sm-5">
 			<div class= "row">
-				<div class= "text-left col-sm-12"><h4>Edit Golfer</h4></div>
+				<div class= "text-left col-sm-12"><h4>New Tournament</h4></div>
 			</div>
 			
 			<div class= "row">
@@ -13,15 +13,19 @@
 			   </div>
 			</div>
 
-			<%= form_for :golfer, url: golfer_path(@golfer), html:{method: :put, :role => "form", :class => "form-inline"} do |f| %>
-				<%= render :partial => "form", :locals=>{:f=>f} %>
-			<div class= "row">
+
+		<%= form_for( @tournament, html: { method: :post, :role => "form", :class => "form-inline" }) do |f| %>
+			<%= render :partial => "form", :locals=>{:f=>f} %>
+		<br />
+		<div class= "row">
 				<div class= "text-left col-sm-3"></br>
 					<div><%= f.submit "Submit", :class => "btn btn-primary" %></div>
 				</div>
-			</div>
-			<% end %>
-	</div>
+				
+		</div>
 
+	
+	<% end %>
+</div>
 
 

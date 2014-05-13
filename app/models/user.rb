@@ -17,7 +17,7 @@ has_many :selections, dependent: :delete_all
   def my_rank(rank)
 	rank_count = User.where("rank = ?", rank).count
 	if rank_count > 1
-		"(tied w/ 2)"
+		"(tied w/ #{rank_count-1})"
 	end
   end
 

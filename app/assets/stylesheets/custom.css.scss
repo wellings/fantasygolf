@@ -17,6 +17,12 @@ body {
 
 }
 
+.container hr {
+	margin: 2px 0;
+	border-color: #000000;
+
+}
+
 section {
   overflow: auto;
 }
@@ -80,18 +86,20 @@ li.main{
 }
 
 .mainBG {
-   background: #006600;
-   color: #FFFFFF;
+   background: #F2F2F2;
+   color: #000000;
    padding: 10px;
+   border-style:solid;
+   border-width:5px;
 }
 
 .mainBG a:link { 
-	color: #FFFFFF;
+	color: #000000;
         text-decoration:underline;	
 }
 
 .mainBG a:visited { 
-	color: #FFFFFF;
+	color: #000000;
         text-decoration:underline;	
 }
 
@@ -112,6 +120,13 @@ li.main{
 .text-span{
     width: 100%;
   }
+
+.comments {
+	width: 400px;
+	background-color: #FFFFFF;
+}
+
+.comments a { color: #ff6600; }
 
 
 .hideOverflow {

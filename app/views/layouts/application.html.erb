@@ -10,7 +10,14 @@
     <![endif]-->
 </head>
 <body>
-<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=695603640500205&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -53,12 +60,12 @@
   <div class="container">
 	<div class="row">
 		<div class="text-center col-sm-12">
-			<h1><%=ApplicationHelper::TOURNAMENT_NAME%></h1>
+			<h1><%=Tournament.where("active=true").first.name%></h1>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-3"></div>
-		<div class="text-center col-sm-5"><small>Last Update: 4/12 11:30 am</small></div>
+		<div class="text-center col-sm-5"><small>Last Update: <%=Golfer.limit(1).last.updated_at.strftime("%m/%d %I:%M%p") %></small></div>
 		<div class="col-sm-4"></div>
 	</div>
 	<div class = "row">
@@ -74,14 +81,29 @@
 					<%= render :partial => '/selections/my_golfers' %>
 	    			</div>
 	   		</div>
-	 	<%end%> 
+		<%else%>
+	   		<div class="panel panel-default">
+	    			<div class="panel-heading text-center">
+					<h3 class="panel-title">Welcome to</br>Fantasy Golf Majors</h3>
+	    			</div>
+  	    			<div class="panel-body text-center">
+					<%= button_to "SIGN UP", new_user_registration_path, method: :get, :class =>"btn btn-primary" %></br>
+					<%= button_to "SIGN IN", new_user_session_path, method: :get, :class =>"btn btn-primary" %> </br>
+					<%= button_to "INVITE A FRIEND", new_user_session_path, method: :get, :class =>"btn btn-primary" %> </br>
+	    			</div>
+	   		</div>
+		
+		
+		<%end%> 
  		</div>
 
 	  <%= yield %>
-	  <div class= "col-sm-4">
-		 <div id="fb-root"></div> 
-<div class="fb-post" data-href="https://www.facebook.com/permalink.php?story_fbid=847545545259015&amp;id=847543381925898" data-width="400"><div class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/permalink.php?story_fbid=847545545259015&amp;id=847543381925898">Post</a> by <a href="https://www.facebook.com/pages/Fantasy-Golf-Majors/847543381925898">Fantasy Golf Majors</a>.</div></div> 
-		<div class="fb-comments" data-href="https://www.facebook.com/pages/Fantasy-Golf-Majors/847543381925898" data-width="400" data-numposts="20" data-colorscheme="light"></div>		
+	  <div class= "col-sm-4" >
+<div id="fb-root"></div> <script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-post" data-href="https://www.facebook.com/fantasygolfmajors/posts/847545545259015" data-width="400"><div class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/fantasygolfmajors/posts/847545545259015">Post</a> by <a href="https://www.facebook.com/fantasygolfmajors">Fantasy Golf Majors</a>.</div></div>
+<div class= "comments">
+		<div class="fb-comments" data-href="https://www.facebook.com/fantasygolfmajors/comments" data-width="400" data-order-by="reverse_time" data-numposts="10" data-colorscheme="light"></div>
+	</div>
 	</div>
      </div>
   </div>

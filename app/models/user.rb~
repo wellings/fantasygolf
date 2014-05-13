@@ -14,14 +14,14 @@ has_many :selections, dependent: :delete_all
     self.first_name.capitalize + ' ' + self.last_name.capitalize
   end
 
-  def my_rank_place(rank)
+  def my_rank(rank)
 	rank_count = User.where("rank = ?", rank).count
 	if rank_count > 1
-		"(tied)"
+		"(tied w/ #{rank_count-1})"
 	end
   end
 
-  def my_rank(rank)
+  def overall_rank(rank)
 	rank_count = User.where("rank = ?", rank).count
 	if rank_count > 1
 		"(tied with #{rank_count-1} others)"

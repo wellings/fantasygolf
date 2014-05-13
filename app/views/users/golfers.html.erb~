@@ -9,18 +9,19 @@
 						<td class="main text-left">Tiebreaker: <%=@player.tiebreaker%></td>
 				     	   </tr>
 					   <tr class="main">
-						   <td class="main text-left">Overall Rank: <%=@player.rank.ordinalize%> <%=@player.my_rank(@player.rank)%></td>
+						   <td class="main text-left">Overall Rank: <%=@player.rank.ordinalize%> <%=@player.overall_rank(@player.rank)%></td>
 				     	   </tr>
 				     	   <tr class="main">
 					     <td class="main text-left">Group Rank: </td>
 					   </tr>
 	  			   </table>
 		   	</div>
-			<div class= "row">
-				<div class="col-sm-12"><hr></div>
+			<div class="row">
+				<div class= "col-sm-12"><hr></div>
 			</div>
+			<div class= "row">
 			<table>
-				<tr>
+				<tr class="main">
 					<td class="users text-center"><h5><b>Rank</b></h5></td>
 					<td class="users text-left"><h5><b>Name</b></h5></td>
 					<td class="users text-center"><h5><b>Score</b></h5></td>
@@ -33,8 +34,8 @@
 					<%rank += 1%>
 					<%score = selected.golfer.score%>
 					<%if score > 90 && line == false%>
-						<div class= "row">
-							<div class="col-sm-12"><hr></div>
+						<tr class="users">
+							<td colspan = "5" class="users text-center"></br><hr></br></td>
 				  			<%line = true%>
 						</div>
 					<%end%>
@@ -61,7 +62,7 @@
 					 <%end%>
 				<%end%>
 			</table>
-					
+			</div>
     		</div>
 
 

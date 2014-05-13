@@ -5,6 +5,10 @@ class GolfersController < ApplicationController
     @golfers = Golfer.order('last_name asc, first_name asc').all
   end
 
+  def manage
+    @golfers = Golfer.order('last_name asc, first_name asc').all
+  end
+
   def show
     @golfer = Golfer.where("id = ?", params[:id])
   end
@@ -17,12 +21,19 @@ class GolfersController < ApplicationController
     @golfer = Golfer.where("id = ?", params[:id]).first
   end
 
+  def clear_score
+     ActiveRecord::Base.connection.execute("Update Golfers set score=0, thru = 0;")
+     ActiveRecord::Base.connection.execute("Update Users set score=0, rank = 0;")
+     redirect_to root_path
+  end
+
+
   def create
     @golfer = Golfer.new(golfer_params)
 
       if @golfer.save
         flash[:notice] = 'Golfer was successfully created.'
-        redirect_to golfers_path
+        redirect_to golfers_manage_path
       else
         flash[:alert] = 'Golfer was NOT successfully created.'
         render new_golfer_path #:action => "new" 
@@ -59,7 +70,7 @@ class GolfersController < ApplicationController
       golfer_rank.update_attributes(golfer)
     end
     flash[:notice] = 'Golfer rank was successfully updated.'
-    redirect_to golfer_rank_path
+    redirect_to golfers_path
   end
 
   def manual_score_update
@@ -146,17 +157,17 @@ class GolfersController < ApplicationController
 
   for golfer in @golfers
 
-    	  retryable(:tries => 5, :on => OpenURI::HTTPError) do
+    retryable(:tries => 10, :on => OpenURI::HTTPError) do
       @doc = Nokogiri::HTML(open("#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}"))
       logger.info "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}"
     end
 
     score = @doc.search("//div[@class='playerStats']/ul/li[5]/span").inner_html
     thru = @doc.search("//div[@class='playerStats']/ul/li[4]/span").inner_html
+
     if score == "-" 
-	    score = 99 
+	    score = 99
     end
-    
     golfer_score = Golfer.where("id = ?", golfer.id).first
     golfer_score.update_attribute('score', score)
     golfer_score.update_attribute('thru', thru)

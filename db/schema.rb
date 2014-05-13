@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140419183156) do
+ActiveRecord::Schema.define(version: 20140512231711) do
 
   create_table "golfers", force: true do |t|
     t.string   "first_name"
@@ -27,8 +27,17 @@ ActiveRecord::Schema.define(version: 20140419183156) do
   create_table "selections", force: true do |t|
     t.integer  "user_id"
     t.integer  "golfer_id"
-    t.integer  "sort"
-    t.integer  "rank"
+    t.integer  "sort",       default: 0
+    t.integer  "rank",       default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tournaments", force: true do |t|
+    t.string   "name"
+    t.string   "year"
+    t.string   "web_id"
+    t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -50,6 +59,8 @@ ActiveRecord::Schema.define(version: 20140419183156) do
     t.string   "last_name"
     t.integer  "tiebreaker"
     t.integer  "score",                  default: 0
+    t.integer  "paid",                   default: 0
+    t.integer  "rank",                   default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
