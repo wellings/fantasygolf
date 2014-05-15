@@ -4,14 +4,14 @@
 </ul>
 <ul class="list-unstyled">
 	<li><%=link_to "Manage Tournaments", tournaments_path %></li>
-	<li><%=link_to "Manage Golfer", golfers_manage_path %></li>
-	<li><%=link_to "Update Golfer Rank", golfers_path %></li>
-	<li><%=link_to "Update Golfer Scores (web)", golfer_scores_path %></li> 
-	<li><%=link_to "Update Golfer Scores (manually)", golfer_manual_score_update_path %></li>
+	<li><%=link_to "Manage Golfers", golfers_manage_path %></li>
+	<li><%=link_to "Update Golfers Rank", golfers_path %></li>
+	<li><%=link_to "Update Golfers Scores (web)", golfer_scores_path %></li> 
+	<li><%=link_to "Update Golfers Scores (manually)", golfer_manual_score_update_path %></li>
 	<li><%=link_to 'Send Email to All', "/" %></li>
 	<li><%=link_to 'Send Email to Select', "/" %></li>
 	<li><%=link_to "Clear All Selections", selection_clear_path, data: { confirm: "Are you sure?" } %></li>
-	<li><%=link_to "Clear Golfer Score", golfers_clear_score_path, data: { confirm: "Are you sure?" } %></li>
+	<li><%=link_to "Clear Golfers Score", golfers_clear_score_path, data: { confirm: "Are you sure?" } %></li>
 </ul>
 <%else%>
 <ul class="list-unstyled">
@@ -23,16 +23,22 @@
 	<li>Group: <strong>No Group</strong></li>
 	<li>Group Rank: <strong><%if nil==nil%>N/A<%else%><%=1.ordinalize%><%end%></strong></li>
 	<li>Status: <strong>Paid</strong></li>
-	<li>Tiebreaker: <strong><%=best_in_place current_user, :tiebreaker, :path => user_registration_path, :html_attrs => { :style => 'width:40px;' }, :activator => "#tiebreak" %></strong>&nbsp;&nbsp;
+	<li>Tiebreaker:
+	<%if tournament_locked? %>
+		<%=current_user.tiebreaker %>
+	<% else %>
+			<strong><%=best_in_place current_user, :tiebreaker, :path => user_registration_path, :html_attrs => { :style => 'width:40px;' }, :activator => "#tiebreak" %></strong>&nbsp;&nbsp;
 				<%= link_to '#', :id => :tiebreak do %>
   					<span class="glyphicon glyphicon-edit"></span>
 				<% end %>
+	<% end %>		
 	</li>
 
 </ul>
 <ul class="list-unstyled">
 	<li><%=link_to "Golfer Leaderboard", golfer_list_path %></li>
 </ul>
+<%if !tournament_locked? %>
 <ul class="list-unstyled">
 	<li>
 	<%if Selection.where("user_id = ?", current_user).count == 10 %>
@@ -42,7 +48,7 @@
 	<%end%>		
 	</li>
 </ul>
-
+<% end %>
 	<table>
 		<tr>
 			<td class="myGolfer"><h5><b>My Golfers</b></h5></td>
@@ -52,9 +58,11 @@
 	<%for my_golfer in Selection.includes(:golfer).where(:user_id => current_user).order("golfers.score asc, selections.sort asc") -%> 
 		<tr class="myGolfer">
 			<td class="myGolfer">
+				<%if !tournament_locked? %>
 				<%= link_to edit_selection_path(current_user, :select_count => my_golfer.rank) do %>
   					<span class="glyphicon glyphicon-edit"></span>
 				<% end %>	
+			    <% end %>
 				<small><%=my_golfer.golfer.full_name%></small>
 			</td>
 	

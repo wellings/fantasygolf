@@ -31,9 +31,13 @@
 					<%= f.label :email, :for => :email %><br />
 					<%= f.email_field :email, :class => "form-control", :id => "email", :placeholder => "Enter Email Address" %>
 				</div>		 
-				<div class= "text-left col-sm-4"> 
+				<div class= "text-left col-sm-4">
 					<%= f.label :tiebreaker, :for => :tiebreaker %><br />
+					<%if Tournament.where("active=1").first.locked? %>
+						<input class="form-control" id="disabledInput" type="text" placeholder="<%=current_user.tiebreaker%>" disabled>
+					<% else %>			       	
 					<%= f.text_field :tiebreaker, :class => "form-control", :id => "tiebreaker", :placeholder => "i.e. -7" %>
+					<% end %>
 				</div>
 		</div>
 		<div class= "row">
@@ -48,9 +52,6 @@
 						 <%= f.label :password_confirmation, :for => :password_confirmation %> <br />
 						 <%= f.password_field :password_confirmation, autocomplete: "off", :class => "form-control", :id => "password_confirmation", :placeholder => "Enter Password Again" %>
 				</div>
-		</div>
-		<div class= "row">
-				<div class= "text-left col-sm-12"><i>*we need your current password to confirm your changes</i></div>
 		</div>
 
 		<br />

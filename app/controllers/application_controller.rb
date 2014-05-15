@@ -5,6 +5,19 @@ class ApplicationController < ActionController::Base
 
  before_action :authenticate_user!, :except => [:index]
  before_action :configure_permitted_parameters, if: :devise_controller?
+ 
+ helper_method :tournament_locked?
+ 
+ def tournament_locked?
+  Tournament.where("active=1").first.locked
+ end
+
+ def tournament_locked
+      if Tournament.where("active=1").first.locked?
+	flash[:alert] = "Tournament has been locked down."
+	redirect_to root_path # halts request cycle
+      end
+ end
 
  protected
 

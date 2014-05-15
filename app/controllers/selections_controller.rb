@@ -1,5 +1,8 @@
 class SelectionsController < ApplicationController
 
+before_action :tournament_locked
+
+
   def new
     @selection = Selection.new
     if session[:select_count] == nil
@@ -64,11 +67,11 @@ class SelectionsController < ApplicationController
     redirect_to :list
   end
 
-  def show_golfers
-    @player = Player.find(params[:id])
-    @golfers = PlayerSelection.find(:all,
-                                    :conditions => ['player_id = ?', params[:id]])
-  end
+#  def show_golfers
+#    @player = Player.find(params[:id])
+#    @golfers = PlayerSelection.find(:all,
+#                                    :conditions => ['player_id = ?', params[:id]])
+#  end
 
   def clear
      ActiveRecord::Base.connection.execute("Truncate selections;")
@@ -132,5 +135,6 @@ private
   def selection_params    
     params.require(:selection).permit(:user_id, :golfer_id, :rank, :sort)
   end
+
 
 end

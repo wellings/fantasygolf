@@ -1,5 +1,6 @@
 class GolfersController < ApplicationController
- 
+
+  before_action :tournament_locked, except: [:index, :score_update_manually, :manual_score_update, :list, :who_has, :golfer_scores ]	
      
   def index
     @golfers = Golfer.order('last_name asc, first_name asc').all
@@ -126,7 +127,7 @@ class GolfersController < ApplicationController
 						and u.id = A.id;")
     ActiveRecord::Base.connection.execute("UPDATE users	SET rank = 1 where rank = 0 and id in (select distinct user_id from selections);")
 
-    redirect_to '/'
+    redirect_to root_path
   end
 
  def list
@@ -214,7 +215,7 @@ class GolfersController < ApplicationController
 						and u.id = A.id;")
     ActiveRecord::Base.connection.execute("UPDATE users	SET rank = 1 where rank = 0 and id in (select distinct user_id from selections);")
 
-    redirect_to '/'
+    redirect_to root_path
         
 end
 

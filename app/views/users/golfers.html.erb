@@ -42,7 +42,7 @@
 
 				<tr class="users">
 	  				<td class="users text-center"><%=selected.sort%></td>
-					<td class="users text-left"><%=link_to h(selected.golfer.full_name), "#{ApplicationHelper::WEB_URL}#{selected.golfer.first_name}+#{selected.golfer.last_name}/#{selected.golfer.web_id}/scorecard/#{Tournament.where("active=1").first.year}/#{Tournament.where("active=1").first.web_id}", :target => '_blank' %></td>
+					<td class="users text-left"><%=link_to h(selected.golfer.full_name), "#{ApplicationHelper::WEB_URL}#{selected.golfer.first_name}+#{selected.golfer.last_name}/#{selected.golfer.web_id}/scorecard/#{tournament_year}/#{tournament_web_id}", :target => '_blank' %></td>
 					<td class="users text-center">	
 	  						<%if selected.golfer.score == 0%>
 								E

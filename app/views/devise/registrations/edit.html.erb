@@ -31,9 +31,13 @@
 					<%= f.label :email, :for => :email %><br />
 					<%= f.email_field :email, :class => "form-control", :id => "email", :placeholder => "Enter Email Address" %>
 				</div>		 
-				<div class= "text-left col-sm-4"> 
+				<div class= "text-left col-sm-4">
 					<%= f.label :tiebreaker, :for => :tiebreaker %><br />
+					<%if tournament_locked? %>
+						<input class="form-control" id="disabledInput" type="text" placeholder="<%=current_user.tiebreaker%>" disabled>
+					<% else %>			       	
 					<%= f.text_field :tiebreaker, :class => "form-control", :id => "tiebreaker", :placeholder => "i.e. -7" %>
+					<% end %>
 				</div>
 		</div>
 		<div class= "row">

@@ -14,12 +14,12 @@
 					
 					<%for golfer in @golfers -%>
    					<tr>
-	   					<td class="main text-left"><%=link_to h(golfer.full_name), "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}#{ApplicationHelper::WEB_SCORECARD}", :target => '_blank' %></td>
+	   					<td class="main text-left"><%=link_to h(golfer.full_name), "#{ApplicationHelper::WEB_URL}#{golfer.first_name}+#{golfer.last_name}/#{golfer.web_id}/scorecard/#{Tournament.where("active=1").first.year}/#{Tournament.where("active=1").first.web_id}", :target => '_blank' %></td>
      						<td class="main text-center">
 	  						<%if golfer.score == 0%>
 	    						   E
 	  						<%else%>
-								<%if score > 50%>
+								<%if golfer.score > 90%>
 									<font color="#FF0000">MC</font>
 								<%else%>
 									<%=h (golfer.score)%>

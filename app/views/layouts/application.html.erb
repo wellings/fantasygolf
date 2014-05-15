@@ -36,12 +36,16 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
         <li><a href="#">About</a></li>
-        <li><a href="#">Refer Friend</a></li>
-        <li><a href="#">Contact</a></li>
+	<%if !tournament_locked? %>
+	<li><a href="#">Refer Friend</a></li>
+	<% end %>
+	<li><a href="#">Contact</a></li>
    <% if user_signed_in? %>
         <li><%= link_to "Logout", destroy_user_session_path, method: :delete%></li>
    <% else %>
-	<li><%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %>
+	<%if !tournament_locked? %>
+		<li><%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %>
+	<% end %>
 	<li><%= link_to "Sign in", new_user_session_path, :class => 'navbar-link'  %></li>
    <% end %>
 </ul>
@@ -87,9 +91,10 @@
 					<h3 class="panel-title">Welcome to</br>Fantasy Golf Majors</h3>
 	    			</div>
   	    			<div class="panel-body text-center">
-					<%= button_to "SIGN UP", new_user_registration_path, method: :get, :class =>"btn btn-primary" %></br>
+				<%if !tournament_locked? %>
+					<%= button_to "INVITE A FRIEND", new_user_session_path, method: :get, :class =>"btn btn-primary" %> </br>								<%= button_to "SIGN UP", new_user_registration_path, method: :get, :class =>"btn btn-primary" %></br>
+				<% end %>
 					<%= button_to "SIGN IN", new_user_session_path, method: :get, :class =>"btn btn-primary" %> </br>
-					<%= button_to "INVITE A FRIEND", new_user_session_path, method: :get, :class =>"btn btn-primary" %> </br>
 	    			</div>
 	   		</div>
 		

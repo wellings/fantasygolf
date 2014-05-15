@@ -57,6 +57,13 @@ class TournamentsController < ApplicationController
      redirect_to tournaments_path
   end
 
+  def locked
+	Tournament.update_all(:locked => false)
+	@tournament = Tournament.where("id = ?", params[:id]).first
+	@tournament.update_column(:locked, true)
+     redirect_to tournaments_path
+  end
+
 private
 
   def tournament_params    
