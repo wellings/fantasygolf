@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140512231711) do
+ActiveRecord::Schema.define(version: 20140515020646) do
 
   create_table "golfers", force: true do |t|
     t.string   "first_name"
@@ -20,6 +20,23 @@ ActiveRecord::Schema.define(version: 20140512231711) do
     t.integer  "thru"
     t.integer  "rank"
     t.integer  "web_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "group_members", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", force: true do |t|
+    t.string   "name"
+    t.integer  "owner"
+    t.string   "password"
+    t.boolean  "private"
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,6 +57,8 @@ ActiveRecord::Schema.define(version: 20140512231711) do
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "active",     default: false
+    t.boolean  "locked",     default: false
   end
 
   create_table "users", force: true do |t|

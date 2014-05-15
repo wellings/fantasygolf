@@ -27,6 +27,7 @@ Rails.application.routes.draw do
    get 'selections/clear', to: 'selections#clear', as: :selection_clear
    resources :selections
    get 'tournaments/activate/:id', to: 'tournaments#activate', as: :tournament_activate
+   get 'tournaments/locked/:id', to: 'tournaments#locked', as: :tournament_locked
    resources :tournaments
 
    # Example of regular route:

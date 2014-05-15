@@ -11,7 +11,12 @@ module ApplicationHelper
 	  Tournament.where("active=1").first.web_id
 	end
 
+       	def group_name
+  	    GroupMember.where("user_id = ?", current_user.id).first.group.name
+ 	end
 
-
+	def group_id
+  	    GroupMember.where("user_id = ?", current_user.id).first.group_id
+ 	end
 
 end

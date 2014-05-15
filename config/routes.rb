@@ -29,6 +29,7 @@ Rails.application.routes.draw do
    get 'tournaments/activate/:id', to: 'tournaments#activate', as: :tournament_activate
    get 'tournaments/locked/:id', to: 'tournaments#locked', as: :tournament_locked
    resources :tournaments
+   resources :groups
 
    # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

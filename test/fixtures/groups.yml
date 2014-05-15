@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  owner: 1
+  password: MyString
+  private: false
+  message: MyText
+
+two:
+  name: MyString
+  owner: 1
+  password: MyString
+  private: false
+  message: MyText
