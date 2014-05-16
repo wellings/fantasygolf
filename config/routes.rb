@@ -29,6 +29,8 @@ Rails.application.routes.draw do
    get 'tournaments/activate/:id', to: 'tournaments#activate', as: :tournament_activate
    get 'tournaments/locked/:id', to: 'tournaments#locked', as: :tournament_locked
    resources :tournaments
+   get 'groups/join/:id', to: 'groups#join', as: :group_join
+   get 'groups/leave/:id', to: 'groups#leave', as: :group_leave
    resources :groups
 
    # Example of regular route:

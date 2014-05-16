@@ -22,7 +22,7 @@
 	</li>
 	<li>Group: <strong>
 		<%if GroupMember.where("user_id = ?", current_user.id).first == nil %>
-			<%= link_to "Create", new_group_path%> | <%= link_to "Join", root_path %>
+			<%= link_to "Create", new_group_path%> | <%= link_to "Join", groups_path %>
 		<%else%>
 			<%=link_to group_name, group_path(group_id)%>
 		<%end%>
@@ -45,8 +45,7 @@
 </ul>
 <ul class="list-unstyled">
 	<li><%=link_to "Overall Leaderboard", root_path %></li>
-</ul>
-<ul class="list-unstyled">
+	<li><%=link_to "Groups", groups_path %></li>
 	<li><%=link_to "Golfer Leaderboard", golfer_list_path %></li>
 </ul>
 <%if !tournament_locked? %>

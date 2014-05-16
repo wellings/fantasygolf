@@ -126,7 +126,34 @@ class GolfersController < ApplicationController
 						where u.id in (select distinct user_id from selections)
 						and u.id = A.id;")
     ActiveRecord::Base.connection.execute("UPDATE users	SET rank = 1 where rank = 0 and id in (select distinct user_id from selections);")
-
+    
+    @groups = GroupMember.select(:group_id).distinct
+    @groups.each do |group|
+      ActiveRecord::Base.connection.execute("SET @grprnk=0;")
+      ActiveRecord::Base.connection.execute("SET @grprank=0;")    
+      ActiveRecord::Base.connection.execute("SET @grpcurscore=0;")
+      ActiveRecord::Base.connection.execute("update users u join
+						(
+						select AA.*, BB.id,
+						(@grprnk:=@grprnk+1) grprnk,
+						(@grprank:=IF(@grpcurscore=AA.score,@grprank, @grprnk)) grprank,
+						(@grpcurscore:=AA.score) as grpnewscore
+						FROM
+						(
+						select * from
+						(select count(1) scorecount,score
+						FROM users 
+						where id in (select distinct user_id from group_members where group_id = #{group.group_id})
+						GROUP BY score
+						) AAA
+						) AA left join users BB on (BB.score = AA.score and BB.id in (select distinct user_id from group_members where group_id = #{group.group_id}))
+						order by score asc) A
+						set u.group_rank = A.grprank
+						where u.id in (select distinct user_id from group_members where group_id = #{group.group_id})
+						and u.id = A.id;")
+      ActiveRecord::Base.connection.execute("UPDATE users	SET group_rank = 1 where group_rank = 0 and id in (select distinct user_id from group_members where group_id = #{group.group_id});")
+    end
+    
     redirect_to root_path
   end
 

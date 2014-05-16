@@ -1,9 +1,18 @@
 		<div class= "mainBG col-sm-5">
 			<div class= "row">
-				<div class= "text-left col-sm-12"><h4><%=@group.name%></h4>
-					<%= @group.message%>
+				<div class= "text-left col-sm-12"><h4><%=@group.name%></br>
+					<small><%= @group.message%></small></h4>
 				</div>
 			</div>
+				<div class= "row">    
+					<div class= "text-left col-sm-6">       
+						Group Creator: <b><%= @group.user.full_name%></b>
+					</div>
+					<div class= "text-center col-sm-3"></div>
+					<div class= "text-center col-sm-3">       
+						<button type="button" class="btn btn-primary btn-sm btn-block">Invite Friends</button>
+					</div>
+				</div>
 				<div class= "row">    
 					<div class= "text-left col-sm-6">       
 						Group Type: </b><%=@group.private ? "Private" : "Public"%></b>
@@ -11,12 +20,15 @@
 				</div>
 				<div class= "row">    
 					<div class= "text-left col-sm-6">       
-						Group Creator: <b><%= @group.user.full_name%></b>
-					</div>
-				</div>
-				<div class= "row">    
-					<div class= "text-left col-sm-6">       
 						Group Size: <b><%= GroupMember.where("group_id = ?", @group.id).count%></b>
+					</div>
+					<div class= "text-center col-sm-3"></div>
+					<div class= "text-center col-sm-3">       
+						<%if group_member %>
+							<%= button_to "Leave Group", group_leave_path(:id => group_member.id), method: :get, :class =>"btn btn-danger btn-sm btn-block" %>
+						<%else%>
+							<%= button_to "Join Group", group_join_path(:id => @group.id), method: :get, :class =>"btn btn-danger btn-sm btn-block" %>
+						<%end%>
 					</div>
 				</div>
 				<%if @group.private %>
@@ -43,18 +55,20 @@
 					</tr>
 					
 				<% @members.each do |member| %>
-				<%score = member.user.score%>
+				<%score = member.score%>
 				<%if score > 50 && @line == false%>
 					<tr class="main"><td class="main text-center" colspan="4"><hr></td></tr>
 					<%@line = true%>
 				<%end%>
 				<tr class="main">
 					<td class="main text-center">
-						<%if member.user.group_rank > 0 %>
-							<%=member.user.group_rank%>
+					<%if score < 50 %>
+						<%if member.group_rank > 0 %>
+							<%=member.group_rank%>
 						<%end%>
+					<% end %>
 					</td>
-					<td class="main text-left" width="40%"><%=link_to h(member.user.full_name), users_golfers_path(member.user_id) %></td>
+					<td class="main text-left" width="40%"><%=link_to h(member.full_name), users_golfers_path(member.id) %></td>
 					<td class="main text-center">	
 					<%if score > 50%>
 						<font color="#FF0000">MC</font>
@@ -62,11 +76,13 @@
 						<%=h score%>
 					<%end%>
 					</td>
-					<td class="main text-center"><%=member.user.tiebreaker%></td>	
+					<td class="main text-center"><%=member.tiebreaker%></td>	
 					<td class="main text-center">	
-						<%if member.user.rank > 0 %>
-							<%=member.user.rank%>
+					<%if score < 50 %>
+						<%if member.rank > 0 %>
+							<%=member.rank%>
 						<%end%>
+					<% end %>
 					</td>
 				</tr>
 				<%end%>	

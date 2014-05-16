@@ -22,12 +22,14 @@
 	</li>
 	<li>Group: <strong>
 		<%if GroupMember.where("user_id = ?", current_user.id).first == nil %>
-			<%= link_to "Create", new_group_path%> | <%= link_to "Join", root_path %>
+			<%= link_to "Create", new_group_path%> | <%= link_to "Join", groups_path %>
 		<%else%>
 			<%=link_to group_name, group_path(group_id)%>
 		<%end%>
 	</strong></li>
-	<li>Group Rank: <strong><%if nil==nil%>N/A<%else%><%=1.ordinalize%><%end%></strong></li>
+	<%if current_user.group_rank > 0%>
+		<li>Group Rank: <strong> <%=current_user.group_rank.ordinalize%></strong></li>
+	<%end%>
 	<li>Status: <strong>Paid</strong></li>
 	<li>Tiebreaker:
 	<%if tournament_locked? %>

@@ -2,12 +2,35 @@
 			<div class= "row">
 				<div class= "text-left col-sm-12"><h4>Groups</h4></div>
 			</div>
-			<br/>
-			<% @groups.each do |group| %>
-				<div class= "row">    
-					<div class= "text-left col-sm-6">       
-						<%= group.name%>
-					</div>
+			<div class= "row">
+				<div class= "text-left col-sm-12">
+					<%= form_tag(groups_path, :method => "get", id: "search-form") do %>
+  					<%= text_field_tag :search, params[:search], placeholder: "Search Groups" %>
+					<%= submit_tag "Search", :name => nil %>			
+					<% end %>
 				</div>
-			<% end %>
+			</div>
+			<div class= "row">
+				<div class= "text-left col-sm-12">
+					<div class="main text-left"><h4><small>Click on Group name to join a group</small></h4></div>
+				</div>
+			</div>
+			<div class= "row">    
+				<div class= "text-left col-sm-12">       
+					<table>
+					  <tr>
+						<td class="main text-left"><h5><b>Group Name</b></h5></td>
+						<td class="main text-left"><h5><b>Access</b></h5></td>
+						<td class="main text-center"><h5><b>Members</b></h5></td>
+					  </tr>
+					<% @groups.each do |group| %>
+					<tr>
+						<td class="main text-left"><%=link_to group.name, group_path(group.id)%></td>
+						<td class="main text-center"><%= group.private ? "Private" : "Public"%></td>
+						<td class="main text-center"><%= GroupMember.where("group_id = ?", group.id).count%></td>
+					</tr>
+					<% end %>
+				   </table>
+				</div>
+			</div>
 		</div>

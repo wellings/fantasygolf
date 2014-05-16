@@ -1,12 +1,17 @@
 class GroupsController < ApplicationController
 
   def index
-    @groups = Group.all
+    if params[:search]
+    	@groups = Group.search(params[:search]).order("name ASC")
+    else
+	@groups = Group.all
+    end
   end
 
  def show
     @group = Group.where("id = ?", params[:id]).first
-    @members = GroupMember.where("group_id = ?", @group.id).all
+#    @members = GroupMember.where("group_id = ?", @group.id).all
+    @members = User.joins(:group_members).select('distinct users.*').order('score asc').all
   end
 
   def new
@@ -15,6 +20,31 @@ class GroupsController < ApplicationController
 
   def edit
     @group = Group.where("id = ?", params[:id]).first
+  end
+
+  def join
+    @group = Group.where("id = ?", params[:id]).first
+    @join = GroupMember.new(:user_id => current_user.id, :group_id => @group.id)
+    if @join.save
+        flash[:notice] = "#{current_user.full_name} was successfully added to #{@group.name} group."
+	redirect_to group_path(:id => @group.id)
+    else
+        flash[:notice] = "#{current_user.full_name} was NOT successfully added to #{@group.name} group."
+	redirect_to group_path(:id => @group.id)
+    end
+	
+  end
+
+  def leave
+    @leave = GroupMember.where(:id => params[:id]).first
+    if @leave.destroy
+        flash[:notice] = "#{current_user.full_name} was successfully removed from the #{@leave.group.name} group."
+	redirect_to group_path(:id => @leave.group_id)
+    else
+        flash[:notice] = "#{current_user.full_name} was NOT successfully removed from the #{@leave.group.name} group."
+	redirect_to group_path(:id => @leave.group_id)
+    end
+	
   end
 
   def create
@@ -31,7 +61,6 @@ class GroupsController < ApplicationController
 
   def update
     @group = Group.where("id = ?", params[:id]).first
-
       if @group.update(group_params)
         flash[:notice] = 'Group was successfully updated.'
         redirect_to groups_path
