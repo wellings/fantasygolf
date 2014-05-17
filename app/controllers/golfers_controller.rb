@@ -151,7 +151,7 @@ class GolfersController < ApplicationController
 						set u.group_rank = A.grprank
 						where u.id in (select distinct user_id from group_members where group_id = #{group.group_id})
 						and u.id = A.id;")
-      ActiveRecord::Base.connection.execute("UPDATE users	SET group_rank = 1 where group_rank = 0 and id in (select distinct user_id from group_members where group_id = #{group.group_id});")
+      ActiveRecord::Base.connection.execute("UPDATE users SET group_rank = 1 where group_rank = 0 and id in (select distinct user_id from group_members where group_id = #{group.group_id});")
     end
     
     redirect_to root_path

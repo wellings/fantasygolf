@@ -1,24 +1,24 @@
 			<div class="row">
-				<div class= "text-left col-sm-6">
+				<div class= "text-left col-sm-9">
 					<p><%= f.label :name, :for => :name %><br/>
 					<%= f.text_field :name, :class => "form-control", :id => "name", :placeholder => "Enter Group Name"  %></p>
 				</div>
 			</div>
 			<div class="row">
-				<div class= "text-left col-sm-6">
+				<div class= "text-left col-sm-9">
 					<p><%= f.label :message, :for => :message %><br/>
 					<%= f.text_field :message, :class => "form-control", :id => "message", :placeholder => "Enter Group Motto"  %></p>
 				</div>
 			</div>
 			<div class="row">
-				<div class= "text-left col-sm-6">
-					<p><%= f.label :private, :for => :private %><br/>
-					<%= f.text_field :private, :class => "form-control", :id => "private", :placeholder => "Enter Private"  %></p>
+				<div class= "col-sm-9 text-left">
+					Type: <%= f.select :private, options_for_select([["Public", 0], ["Private", 1]]) %>
 				</div>
 			</div>
+			</br>
 			<div class="row">
-				<div class= "text-left col-sm-6">
-					<p><%= f.label :password, :for => :password %><br/>
+				<div class= "text-left col-sm-9">
+					<p><%= f.label :password, :for => :password %> (if private)<br/>
 					<%= f.text_field :password, :class => "form-control", :id => "password", :placeholder => "Enter Password"  %></p>
 				</div>
 			</div>

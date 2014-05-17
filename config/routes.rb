@@ -31,6 +31,8 @@ Rails.application.routes.draw do
    resources :tournaments
    get 'groups/join/:id', to: 'groups#join', as: :group_join
    get 'groups/leave/:id', to: 'groups#leave', as: :group_leave
+   get 'groups/password/:id', to: 'groups#password', as: :group_password
+   get 'groups/verify_password/:id', to: 'groups#verify_password', as: :group_verify_password
    resources :groups
 
    # Example of regular route:

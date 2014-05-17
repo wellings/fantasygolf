@@ -25,6 +25,9 @@
 			<%= link_to "Create", new_group_path%> | <%= link_to "Join", groups_path %>
 		<%else%>
 			<%=link_to group_name, group_path(group_id)%>
+			<%if Group.where("user_id = ?", current_user.id).first != nil && Group.where("user_id = ?", current_user.id).first.user_id == current_user.id %> 
+			&nbsp;<small>(<%= link_to 'Edit', edit_group_path(group_id) %>)</small>
+			<%end%>
 		<%end%>
 	</strong></li>
 	<%if current_user.group_rank > 0%>
@@ -45,8 +48,8 @@
 </ul>
 <ul class="list-unstyled">
 	<li><%=link_to "Overall Leaderboard", root_path %></li>
-	<li><%=link_to "Groups", groups_path %></li>
 	<li><%=link_to "Golfer Leaderboard", golfer_list_path %></li>
+	<li><%=link_to "Groups", groups_path %></li>
 </ul>
 <%if !tournament_locked? %>
 <ul class="list-unstyled">

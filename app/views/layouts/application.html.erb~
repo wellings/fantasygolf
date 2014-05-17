@@ -43,7 +43,7 @@
    <% if user_signed_in? %>
         <li><%= link_to "Logout", destroy_user_session_path, method: :delete%></li>
    <% else %>
-	<%if !Tournament.where("active=1").first.locked? %>
+	<%if !tournament_locked? %>
 		<li><%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %>
 	<% end %>
 	<li><%= link_to "Sign in", new_user_session_path, :class => 'navbar-link'  %></li>
@@ -91,7 +91,7 @@
 					<h3 class="panel-title">Welcome to</br>Fantasy Golf Majors</h3>
 	    			</div>
   	    			<div class="panel-body text-center">
-				<%if !Tournament.where("active=1").first.locked? %>
+				<%if !tournament_locked? %>
 					<%= button_to "INVITE A FRIEND", new_user_session_path, method: :get, :class =>"btn btn-primary" %> </br>								<%= button_to "SIGN UP", new_user_registration_path, method: :get, :class =>"btn btn-primary" %></br>
 				<% end %>
 					<%= button_to "SIGN IN", new_user_session_path, method: :get, :class =>"btn btn-primary" %> </br>

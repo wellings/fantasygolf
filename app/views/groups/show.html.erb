@@ -31,7 +31,7 @@
 						<%end%>
 					</div>
 				</div>
-				<%if @group.private %>
+				<%if @group.private && GroupMember.where("user_id = ?", current_user.id).first %>
 				<div class= "row">    
 					<div class= "text-left col-sm-6">       
 						Group Password: <b><%= @group.password%></b>

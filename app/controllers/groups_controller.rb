@@ -11,7 +11,7 @@ class GroupsController < ApplicationController
  def show
     @group = Group.where("id = ?", params[:id]).first
 #    @members = GroupMember.where("group_id = ?", @group.id).all
-    @members = User.joins(:group_members).select('distinct users.*').order('score asc').all
+    @members = User.joins(:group_members).select('distinct users.*').where("group_id = ?", @group.id).order('score asc').all
   end
 
   def new
@@ -23,17 +23,44 @@ class GroupsController < ApplicationController
   end
 
   def join
-    @group = Group.where("id = ?", params[:id]).first
-    @join = GroupMember.new(:user_id => current_user.id, :group_id => @group.id)
-    if @join.save
-        flash[:notice] = "#{current_user.full_name} was successfully added to #{@group.name} group."
-	redirect_to group_path(:id => @group.id)
+   @group = Group.where("id = ?", params[:id]).first
+    if @group.private 
+	redirect_to group_password_path(:id => @group.id)
     else
-        flash[:notice] = "#{current_user.full_name} was NOT successfully added to #{@group.name} group."
-	redirect_to group_path(:id => @group.id)
-    end
+    @join = GroupMember.new(:user_id => current_user.id, :group_id => @group.id)
+    	if @join.save
+        	flash[:notice] = "#{current_user.full_name} was successfully added to #{@group.name} group."
+		redirect_to group_path(:id => @group.id)
+    	else
+        	flash[:notice] = "#{current_user.full_name} was NOT successfully added to #{@group.name} group."
+		redirect_to group_path(:id => @group.id)
+    	end
+    end	
+  end
+
+  def password
+	@group = Group.where("id = ?", params[:id]).first
 	
   end
+
+  def verify_password
+    if params[:password]
+    	@group = Group.where("id = ?", params[:id]).first
+	if @group.password == params[:password]
+		@join = GroupMember.new(:user_id => current_user.id, :group_id => @group.id)
+	    	if @join.save
+        		flash[:notice] = "#{current_user.full_name} was successfully added to #{@group.name} group."
+			redirect_to group_path(:id => @group.id)
+	    	else
+        		flash[:notice] = "#{current_user.full_name} was NOT successfully added to #{@group.name} group."
+			redirect_to group_path(:id => @group.id)
+	    	end
+	else
+		flash[:alert] = "The password you entered does NOT match our records."
+		redirect_to group_path(:id => @group.id)
+	end
+    end
+  end 
 
   def leave
     @leave = GroupMember.where(:id => params[:id]).first

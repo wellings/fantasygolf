@@ -129,10 +129,10 @@ class GolfersController < ApplicationController
     
     @groups = GroupMember.select(:group_id).distinct
     @groups.each do |group|
-    ActiveRecord::Base.connection.execute("SET @grprnk=0;")
-    ActiveRecord::Base.connection.execute("SET @grprank=0;")    
-    ActiveRecord::Base.connection.execute("SET @grpcurscore=0;")
-    ActiveRecord::Base.connection.execute("update users u join
+      ActiveRecord::Base.connection.execute("SET @grprnk=0;")
+      ActiveRecord::Base.connection.execute("SET @grprank=0;")    
+      ActiveRecord::Base.connection.execute("SET @grpcurscore=0;")
+      ActiveRecord::Base.connection.execute("update users u join
 						(
 						select AA.*, BB.id,
 						(@grprnk:=@grprnk+1) grprnk,
@@ -151,8 +151,8 @@ class GolfersController < ApplicationController
 						set u.group_rank = A.grprank
 						where u.id in (select distinct user_id from group_members where group_id = #{group.group_id})
 						and u.id = A.id;")
+      ActiveRecord::Base.connection.execute("UPDATE users	SET group_rank = 1 where group_rank = 0 and id in (select distinct user_id from group_members where group_id = #{group.group_id});")
     end
-    ActiveRecord::Base.connection.execute("UPDATE users	SET group_rank = 1 where group_rank = 0 and id in (select distinct user_id from group_members where group_id = #{group.group_id});")
     
     redirect_to root_path
   end
