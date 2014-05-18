@@ -26,7 +26,7 @@
 		<%else%>
 			<%=link_to group_name, group_path(group_id)%>
 			<%if Group.where("user_id = ?", current_user.id).first != nil && Group.where("user_id = ?", current_user.id).first.user_id == current_user.id %> 
-			&nbsp;&nbsp;&nbsp;<small>(<%= link_to 'Edit', edit_group_path(group_id) %>)</small>
+			&nbsp;<small>(<%= link_to 'Edit', edit_group_path(group_id) %>)</small>
 			<%end%>
 		<%end%>
 	</strong></li>
@@ -57,7 +57,7 @@
 	<%if Selection.where("user_id = ?", current_user).count == 10 %>
 		Click <span class="glyphicon glyphicon-edit"></span> to change golfer
 	<%else%>
-		<%= button_to "Select Golfers", selection_golfers_path, method: :get, :class =>"btn btn-danger" %>
+		<%= button_to "Select Golfers", selection_golfers_path, method: :get, :class =>"btn btn-danger text-center" %>
 	<%end%>		
 	</li>
 </ul>

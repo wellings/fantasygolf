@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+        <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p>You have received the following email from <%= "#{ @name } (#{ @email }):" %></p>
+	<p><%= @body %></p>
+	<p>Click on the link below to join their group:</p>
+	<p>http://fantasygolfmajors.com/groups/<%= "#{ @group.id}" %></p>
+
+
+	<p>Group Name: <%=@group.name%>
+	<%if @group.private%>
+	   Password: <%=@group.password%>
+	<% end %>
+	</p>
+    </body>
+</html>

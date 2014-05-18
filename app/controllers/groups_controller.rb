@@ -40,7 +40,6 @@ class GroupsController < ApplicationController
 
   def password
 	@group = Group.where("id = ?", params[:id]).first
-	
   end
 
   def verify_password

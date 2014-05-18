@@ -11,7 +11,9 @@ module Fantasygolf
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-
+     config.action_mailer.delivery_method = :sendmail
+     config.action_mailer.perform_deliveries = true
+     config.action_mailer.raise_delivery_errors = true
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
      config.time_zone = 'Eastern Time (US & Canada)'
