@@ -1,0 +1,31 @@
+	<div class= "mainBG col-sm-5">
+			<div class= "row">
+				<div class= "text-left col-sm-12"><h4>Send Us A Message</h4></div>
+			</div>
+			
+			<div class= "row">
+ 			   <div class= "text-left col-sm-12">
+				   <% if resource.errors.any? %>
+					   <div class= "alert alert-danger">
+				   		<%= render 'layouts/error_messages', object: resource %>
+		   			   </div>
+	   			   <%end%>
+			   </div>
+			</div>
+			<%= form_tag(send_mail_contact_us_path) do %>
+		            <div class="form-group">
+		                <%= label_tag 'name', 'Your Name' %>
+                		<%= text_field_tag 'name', current_user.full_name, class: 'form-control' %>
+            		    </div>
+		            <div class="form-group">
+		                <%= label_tag 'email', 'Your Email' %>
+                		<%= text_field_tag 'email', current_user.email, class: 'form-control' %>
+            		    </div>
+           		<div class="form-group">
+               			<%= label_tag 'comment', 'Comment/Question' %>
+				<%= text_area_tag 'comment', nil, class: 'form-control', rows: 10, :placeholder => "Your Comment...." %>
+           		</div>
+           		<%= submit_tag "Send", class: 'btn btn-primary' %>
+       		<% end %>
+
+	</div>

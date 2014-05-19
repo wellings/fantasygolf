@@ -37,6 +37,8 @@ Rails.application.routes.draw do
    resources :groups
 
    match '/send_mail', to: 'contacts#send_mail', via: 'post'
+   match '/send_mail_contact_us', to: 'contacts#send_mail_contact_us', via: 'post'
+   get 'contacts/contact_us', to: 'contacts#contact_us', as: :contact_contact_us
    get 'contacts/(:group)', to: 'contacts#index', as: :contact
    resources :contacts
 

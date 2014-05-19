@@ -20,4 +20,12 @@ class ContactMailer < ActionMailer::Base
         mail(from: email, to: sendto, subject: 'Fantasy Golf Majors')
     end
 
+    def contact_us(name, email, body)
+        @name = name
+        @email = email
+        @body = body
+
+        mail(from: email, to: 'jeff@hsxn.com', subject: 'Comment to FantasyGolf')
+    end
+
 end

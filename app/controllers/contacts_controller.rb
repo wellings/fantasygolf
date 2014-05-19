@@ -20,5 +20,13 @@ def send_mail
     end
 end
 
+def send_mail_contact_us
+    name = params[:name]
+    sendto = "jeff@hsxn.com"
+    email = params[:email]
+    body = params[:comment]
+    ContactMailer.contact_us(name, email, body).deliver
+    redirect_to root_path, notice: 'Comment was sucessfully sent. Thank you.'
+end
 
 end
